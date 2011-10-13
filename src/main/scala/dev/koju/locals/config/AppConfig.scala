@@ -9,7 +9,10 @@ case class DatabaseConfig(
     url: String,
     user: String,
     password: String,
+    driver: String,
+    connections: DatabaseConnectionsConfig,
 )
+case class DatabaseConnectionsConfig(poolSize: Int)
 
 object AppConfig {
   implicit val decoder: Decoder[AppConfig] = deriveDecoder
@@ -21,4 +24,8 @@ object ServerConfig {
 
 object DatabaseConfig {
   implicit val decoder: Decoder[DatabaseConfig] = deriveDecoder
+}
+
+object DatabaseConnectionsConfig {
+  implicit val decoder: Decoder[DatabaseConnectionsConfig] = deriveDecoder
 }

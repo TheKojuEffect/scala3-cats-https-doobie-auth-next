@@ -15,14 +15,18 @@ object User {
 }
 
 final case class NormalUser(
-    id: UserId,
+    id: UUID,
     email: String,
     password: String,
     profile: UserProfile,
-)
+) {
+  def role: Role = Role.Normal
+}
 
 final case class AdminUser(
-    id: UserId,
+    id: UUID,
     email: String,
     password: String,
-)
+) {
+  def role: Role = Role.Admin
+}
