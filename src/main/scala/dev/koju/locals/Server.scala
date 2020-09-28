@@ -7,15 +7,18 @@ import org.http4s.client.blaze.BlazeClientBuilder
 import org.http4s.implicits._
 import org.http4s.server.blaze.BlazeServerBuilder
 import org.http4s.server.middleware.Logger
+
 import scala.concurrent.ExecutionContext.global
 
 object Server {
 
-  def stream[F[_]: ConcurrentEffect](implicit T: Timer[F], C: ContextShift[F]): Stream[F, Nothing] = {
+  def stream[F[_]: ConcurrentEffect: ContextShift](implicit
+      T: Timer[F],
+  ): Stream[F, Nothing] = {
     for {
       client <- BlazeClientBuilder[F](global).stream
       helloWorldAlg = HelloWorld.impl[F]
-      jokeAlg = Jokes.impl[F](client)
+      jokeAlg       = Jokes.impl[F](client)
 
       // Combine Service Routes into an HttpApp.
       // Can also be done via a Router if you
@@ -23,7 +26,7 @@ object Server {
       // in the underlying routes.
       httpApp = (
         Routes.helloWorldRoutes[F](helloWorldAlg) <+>
-        Routes.jokeRoutes[F](jokeAlg)
+          Routes.jokeRoutes[F](jokeAlg)
       ).orNotFound
 
       // With Middlewares in place
