@@ -2,6 +2,8 @@ package dev.koju.locals
 
 import cats.effect.{ConcurrentEffect, ContextShift, Resource, Timer}
 import cats.implicits._
+import dev.koju.locals.config.AppConfig
+import io.circe.config.parser
 import org.http4s.client.blaze.BlazeClientBuilder
 import org.http4s.implicits._
 import org.http4s.server.blaze.BlazeServerBuilder
@@ -13,6 +15,7 @@ import scala.concurrent.ExecutionContext.global
 object Server {
   def create[F[_]: ConcurrentEffect: ContextShift: Timer]: Resource[F, HttpServer[F]] =
     for {
+      conf   <- Resource.liftF(parser.decodePathF[F, AppConfig]("locals"))
       client <- BlazeClientBuilder[F](global).resource
       helloWorldAlg = HelloWorld.impl[F]
       jokeAlg       = Jokes.impl[F](client)
@@ -24,7 +27,7 @@ object Server {
       finalHttpApp = Logger.httpApp(logHeaders = true, logBody = true)(httpApp)
 
       server <- BlazeServerBuilder[F](global)
-        .bindHttp(8080, "0.0.0.0")
+        .bindHttp(conf.server.port, conf.server.host)
         .withHttpApp(finalHttpApp)
         .resource
     } yield server
