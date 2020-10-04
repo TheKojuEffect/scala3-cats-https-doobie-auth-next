@@ -4,6 +4,7 @@ val CirceConfigVersion = "0.8.0"
 val LogbackVersion     = "1.2.3"
 val ScalaTagsVersion   = "0.9.1"
 val Specs2Version      = "4.10.0"
+val TSecVersion        = "0.2.1"
 
 lazy val root = (project in file("."))
   .settings(
@@ -12,16 +13,18 @@ lazy val root = (project in file("."))
     version := "0.0.1-SNAPSHOT",
     scalaVersion := "2.13.3",
     libraryDependencies ++= Seq(
-      "org.http4s"    %% "http4s-blaze-server" % Http4sVersion,
-      "org.http4s"    %% "http4s-blaze-client" % Http4sVersion,
-      "org.http4s"    %% "http4s-circe"        % Http4sVersion,
-      "org.http4s"    %% "http4s-dsl"          % Http4sVersion,
-      "org.http4s"    %% "http4s-scalatags"    % Http4sVersion,
-      "com.lihaoyi"   %% "scalatags"           % ScalaTagsVersion,
-      "io.circe"      %% "circe-generic"       % CirceVersion,
-      "io.circe"      %% "circe-config"        % CirceConfigVersion,
-      "org.specs2"    %% "specs2-core"         % Specs2Version % "test",
-      "ch.qos.logback" % "logback-classic"     % LogbackVersion,
+      "org.http4s"         %% "http4s-blaze-server" % Http4sVersion,
+      "org.http4s"         %% "http4s-blaze-client" % Http4sVersion,
+      "org.http4s"         %% "http4s-circe"        % Http4sVersion,
+      "org.http4s"         %% "http4s-dsl"          % Http4sVersion,
+      "org.http4s"         %% "http4s-scalatags"    % Http4sVersion,
+      "com.lihaoyi"        %% "scalatags"           % ScalaTagsVersion,
+      "io.circe"           %% "circe-generic"       % CirceVersion,
+      "io.circe"           %% "circe-config"        % CirceConfigVersion,
+      "org.specs2"         %% "specs2-core"         % Specs2Version % "test",
+      "ch.qos.logback"      % "logback-classic"     % LogbackVersion,
+      "io.github.jmcardon" %% "tsec-common"         % TSecVersion,
+      "io.github.jmcardon" %% "tsec-password"       % TSecVersion,
     ),
     addCompilerPlugin("org.typelevel" %% "kind-projector"     % "0.10.3"),
     addCompilerPlugin("com.olegpy"    %% "better-monadic-for" % "0.3.1"),
