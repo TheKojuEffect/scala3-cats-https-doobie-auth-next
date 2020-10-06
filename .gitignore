@@ -5,3 +5,4 @@ target
 project/target
 .bloop
 .metals
+.bsp
