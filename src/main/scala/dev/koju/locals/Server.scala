@@ -8,7 +8,6 @@ import dev.koju.locals.user.domain.UserService
 import dev.koju.locals.user.repo.UserRepository
 import dev.koju.locals.view.ViewRoutes
 import io.circe.config.parser
-import org.http4s.client.blaze.BlazeClientBuilder
 import org.http4s.implicits._
 import org.http4s.server.blaze.BlazeServerBuilder
 import org.http4s.server.{Server => HttpServer}
@@ -20,16 +19,11 @@ object Server {
   def create[F[_]: ConcurrentEffect: ContextShift: Timer]: Resource[F, HttpServer[F]] =
     for {
       conf   <- Resource.liftF(parser.decodePathF[F, AppConfig]("locals"))
-      client <- BlazeClientBuilder[F](global).resource
-      helloWorldAlg = HelloWorld.impl[F]
-      jokeAlg       = Jokes.impl[F](client)
       userRepo      = UserRepository[F]()
       userService   = UserService(userRepo, BCrypt.syncPasswordHasher[F])
       httpApp = (
         ViewRoutes.index <+>
-          NormalUserRoutes.routes(userService) <+>
-          Routes.helloWorldRoutes[F](helloWorldAlg) <+>
-          Routes.jokeRoutes[F](jokeAlg)
+          NormalUserRoutes.routes(userService)
       ).orNotFound
 
       server <- BlazeServerBuilder[F](global)
