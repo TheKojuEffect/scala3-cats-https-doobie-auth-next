@@ -2,7 +2,7 @@ package dev.koju.locals
 
 import cats.effect.{ConcurrentEffect, ContextShift, Resource, Timer}
 import cats.implicits._
-import dev.koju.locals.config.AppConfig
+import dev.koju.locals.config.{AppConfig, DatabaseSetup}
 import dev.koju.locals.user.api.NormalUserRoutes
 import dev.koju.locals.user.domain.UserService
 import dev.koju.locals.user.repo.UserRepository
@@ -18,14 +18,14 @@ import scala.concurrent.ExecutionContext.global
 object Server {
   def create[F[_]: ConcurrentEffect: ContextShift: Timer]: Resource[F, HttpServer[F]] =
     for {
-      conf   <- Resource.liftF(parser.decodePathF[F, AppConfig]("locals"))
-      userRepo      = UserRepository[F]()
-      userService   = UserService(userRepo, BCrypt.syncPasswordHasher[F])
+      conf <- Resource.liftF(parser.decodePathF[F, AppConfig]("locals"))
+      userRepo    = UserRepository[F]()
+      userService = UserService(userRepo, BCrypt.syncPasswordHasher[F])
       httpApp = (
         ViewRoutes.index <+>
           NormalUserRoutes.routes(userService)
       ).orNotFound
-
+      _ <- Resource.liftF(DatabaseSetup.initDb(conf.db))
       server <- BlazeServerBuilder[F](global)
         .bindHttp(conf.server.port, conf.server.host)
         .withHttpApp(httpApp)
