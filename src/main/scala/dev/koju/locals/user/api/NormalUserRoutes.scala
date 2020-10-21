@@ -18,14 +18,15 @@ object NormalUserRoutes {
 
   def signUp[F[_]: Sync](userService: UserService[F]): HttpRoutes[F] = {
     implicit val signUpRequestDecoder: EntityDecoder[F, SignUpRequest] = jsonOf
-    val dsl                                                            = new Http4sDsl[F] {}
+    val dsl = new Http4sDsl[F] {}
     import dsl._
-    HttpRoutes.of[F] { case req @ POST -> Root =>
-      for {
-        signUpRequest <- req.as[SignUpRequest]
-        normalUser    <- userService.signUp(signUpRequest)
-        result        <- Created(normalUser.id.asJson)
-      } yield result
+    HttpRoutes.of[F] {
+      case req @ POST -> Root =>
+        for {
+          signUpRequest <- req.as[SignUpRequest]
+          normalUser <- userService.signUp(signUpRequest)
+          result <- Created(normalUser.id.asJson)
+        } yield result
     }
   }
 }
