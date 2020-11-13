@@ -22,18 +22,28 @@ object AuthRoutes {
   def routes[F[_]: Sync, A](
       userService: UserService[F],
       passwordHasher: PasswordHasher[F, A],
-      authService: SecuredRequestHandler[F, UserId, User, AuthEncryptedCookie[AES128GCM, UserId]],
+      securedRequestHandler: SecuredRequestHandler[
+        F,
+        UserId,
+        User,
+        AuthEncryptedCookie[AES128GCM, UserId],
+      ],
   ): HttpRoutes[F] = Router(
-    "login" -> logIn(userService, passwordHasher, authService),
+    "login" -> logIn(userService, passwordHasher, securedRequestHandler),
   )
 
   def logIn[F[_]: Sync, A](
       userService: UserService[F],
       passwordHasher: PasswordHasher[F, A],
-      authService: SecuredRequestHandler[F, UserId, User, AuthEncryptedCookie[AES128GCM, UserId]],
+      securedRequestHandler: SecuredRequestHandler[
+        F,
+        UserId,
+        User,
+        AuthEncryptedCookie[AES128GCM, UserId],
+      ],
   ): HttpRoutes[F] = {
     implicit val logInRequestDecoder: EntityDecoder[F, LogInRequest] = jsonOf
-    val dsl = new Http4sDsl[F] {}
+    val dsl = Http4sDsl[F]
     import dsl._
 
     HttpRoutes.of[F] { case req @ POST -> Root =>
@@ -47,12 +57,12 @@ object AuthRoutes {
           case Verified => Option(())
           case _        => None
         })
-        token <- OptionT.liftF(authService.authenticator.create(user.id))
+        token <- OptionT.liftF(securedRequestHandler.authenticator.create(user.id))
       } yield (user, token)
 
       action.value.flatMap {
         case Some((user, token)) =>
-          Ok(user.id.asJson).map(authService.authenticator.embed(_, token))
+          Ok(user.id.asJson).map(securedRequestHandler.authenticator.embed(_, token))
         case None =>
           Unauthorized(
             `WWW-Authenticate`(NonEmptyList.of(Challenge("Basic", "Local Locals"))),

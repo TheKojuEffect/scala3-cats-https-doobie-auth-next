@@ -10,4 +10,6 @@ trait UserRepo[F[_]] {
   def getUserByEmail(email: String): OptionT[F, User]
 
   def getUser(id: UserId): OptionT[F, User]
+
+  def updateUserProfile(userId: UserId, profile: UserProfile): F[UserProfile]
 }

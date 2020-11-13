@@ -3,11 +3,13 @@ package dev.koju.locals.user.domain
 import cats.FlatMap
 import cats.data.OptionT
 import cats.implicits._
+import dev.koju.locals.user.domain.User.UserId
 import tsec.passwordhashers.PasswordHasher
 
 trait UserService[F[_]] {
   def getUserByEmail(email: String): OptionT[F, User]
   def signUp(request: SignUpRequest): F[NormalUser]
+  def updateUserProfile(userId: UserId, profile: UserProfile): F[UserProfile]
 }
 
 object UserService {
@@ -25,5 +27,8 @@ object UserService {
         normalUser = request.asNormalUser(passwordHash)
         savedUser <- userRepo.create(normalUser)
       } yield savedUser
+
+    override def updateUserProfile(userId: UserId, profile: UserProfile): F[UserProfile] =
+      userRepo.updateUserProfile(userId, profile)
   }
 }

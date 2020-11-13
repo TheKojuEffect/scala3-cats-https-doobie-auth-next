@@ -4,7 +4,7 @@ import cats.data.OptionT
 import cats.effect.Bracket
 import cats.implicits._
 import dev.koju.locals.user.domain.User.UserId
-import dev.koju.locals.user.domain.{NormalUser, User, UserRepo}
+import dev.koju.locals.user.domain.{NormalUser, User, UserProfile, UserRepo}
 import doobie.implicits._
 import doobie.postgres.implicits._
 import doobie.util.query.Query0
@@ -29,6 +29,11 @@ class UserRepository[F[_]: Bracket[*[_], Throwable]](val transactor: Transactor[
     insertNormal(user).run
       .transact(transactor)
       .as(user)
+
+  override def updateUserProfile(userId: UserId, profile: UserProfile): F[UserProfile] =
+    updateProfile(userId, profile).run
+      .transact(transactor)
+      .as(profile)
 }
 
 object UserRepository {
@@ -60,4 +65,16 @@ private object UserSql {
     INSERT INTO user_profile (user_id, first_name, last_name, city, state, ethnic_country)
     VALUES (${user.id}, ${user.profile.firstName}, ${user.profile.lastName}, ${user.profile.city}, ${user.profile.state}, ${user.profile.ethnicCountry});
   """.update
+
+  def updateProfile(userId: UserId, profile: UserProfile): Update0 =
+    sql"""
+        UPDATE user_profile
+        SET
+          first_name = ${profile.firstName},
+          last_name = ${profile.lastName},
+          city = ${profile.city},
+          state = ${profile.state},
+          ethnic_country = ${profile.ethnicCountry}
+        WHERE user_id = $userId
+       """.update
 }

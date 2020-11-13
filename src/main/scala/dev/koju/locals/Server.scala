@@ -25,11 +25,11 @@ object Server {
       userRepo = UserRepository[F](transactor)
       passwordHasher = BCrypt.syncPasswordHasher[F]
       userService = UserService(userRepo, passwordHasher)
-      authService = Auth.securedRequestHandler(userRepo)
+      securedRequestHandler = Auth.securedRequestHandler(userRepo)
       httpApp = (
         ViewRoutes.index <+>
-          AuthRoutes.routes(userService, passwordHasher, authService) <+>
-          NormalUserRoutes.routes(userService)
+          AuthRoutes.routes(userService, passwordHasher, securedRequestHandler) <+>
+          NormalUserRoutes.routes(userService, securedRequestHandler)
       ).orNotFound
       _ <- Resource.liftF(DatabaseSetup.initDb(conf.db))
       server <- BlazeServerBuilder[F](serverContext)
