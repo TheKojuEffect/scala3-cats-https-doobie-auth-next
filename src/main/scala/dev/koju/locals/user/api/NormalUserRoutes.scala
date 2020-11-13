@@ -59,11 +59,14 @@ object NormalUserRoutes {
 
     securedRequestHandler.liftService(TSecAuthService {
       case req @ PUT -> Root / UUIDVar(id) asAuthed user =>
-        for {
-          profile <- req.request.as[UserProfile]
-          _ <- userService.updateUserProfile(id, profile)
-          result <- Ok(user.id.asJson)
-        } yield result
+        if (user.id === id)
+          for {
+            profile <- req.request.as[UserProfile]
+            _ <- userService.updateUserProfile(id, profile)
+            result <- Ok()
+          } yield result
+        else
+          NotFound()
     })
   }
 }
