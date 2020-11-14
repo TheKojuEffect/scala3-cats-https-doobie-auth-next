@@ -2,6 +2,7 @@ package dev.koju.locals.user.api
 
 import cats.effect.Sync
 import cats.implicits._
+import dev.koju.locals.auth.Auth.AuthHandler
 import dev.koju.locals.user.domain.User.UserId
 import dev.koju.locals.user.domain.{SignUpRequest, User, UserProfile, UserService}
 import io.circe.generic.auto._
@@ -18,14 +19,12 @@ object NormalUserRoutes {
 
   def routes[F[_]: Sync](
       userService: UserService[F],
-      securedRequestHandler: SecuredRequestHandler[
-        F,
-        UserId,
-        User,
-        AuthEncryptedCookie[AES128GCM, UserId],
-      ],
+      authHandler: AuthHandler[F],
   ): HttpRoutes[F] = Router(
-    "normal-users" -> (signUp(userService) <+> update(userService, securedRequestHandler)),
+    "normal-users" -> (
+      signUp(userService) <+>
+        update(userService, authHandler)
+    ),
   )
 
   def signUp[F[_]: Sync](
@@ -46,19 +45,14 @@ object NormalUserRoutes {
 
   def update[F[_]: Sync](
       userService: UserService[F],
-      securedRequestHandler: SecuredRequestHandler[
-        F,
-        UserId,
-        User,
-        AuthEncryptedCookie[AES128GCM, UserId],
-      ],
+      authHandler: AuthHandler[F],
   ): HttpRoutes[F] = {
     implicit val userProfileDecoder: EntityDecoder[F, UserProfile] = jsonOf
     val dsl = Http4sDsl[F]
     import dsl._
 
-    securedRequestHandler.liftService(TSecAuthService {
-      case req @ PUT -> Root / UUIDVar(id) asAuthed user =>
+    authHandler.liftService(
+      TSecAuthService { case req @ PUT -> Root / UUIDVar(id) asAuthed user =>
         if (user.id === id)
           for {
             profile <- req.request.as[UserProfile]
@@ -67,6 +61,7 @@ object NormalUserRoutes {
           } yield result
         else
           NotFound()
-    })
+      },
+    )
   }
 }

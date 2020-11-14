@@ -3,6 +3,7 @@ package dev.koju.locals.auth.api
 import cats.data.{NonEmptyList, OptionT}
 import cats.effect.Sync
 import cats.implicits._
+import dev.koju.locals.auth.Auth.AuthHandler
 import dev.koju.locals.user.domain.User.UserId
 import dev.koju.locals.user.domain.{User, UserService}
 import io.circe.generic.auto._
@@ -22,25 +23,15 @@ object AuthRoutes {
   def routes[F[_]: Sync, A](
       userService: UserService[F],
       passwordHasher: PasswordHasher[F, A],
-      securedRequestHandler: SecuredRequestHandler[
-        F,
-        UserId,
-        User,
-        AuthEncryptedCookie[AES128GCM, UserId],
-      ],
+      authHandler: AuthHandler[F],
   ): HttpRoutes[F] = Router(
-    "login" -> logIn(userService, passwordHasher, securedRequestHandler),
+    "login" -> logIn(userService, passwordHasher, authHandler),
   )
 
   def logIn[F[_]: Sync, A](
       userService: UserService[F],
       passwordHasher: PasswordHasher[F, A],
-      securedRequestHandler: SecuredRequestHandler[
-        F,
-        UserId,
-        User,
-        AuthEncryptedCookie[AES128GCM, UserId],
-      ],
+      authHandler: AuthHandler[F],
   ): HttpRoutes[F] = {
     implicit val logInRequestDecoder: EntityDecoder[F, LogInRequest] = jsonOf
     val dsl = Http4sDsl[F]
@@ -57,12 +48,12 @@ object AuthRoutes {
           case Verified => Option(())
           case _        => None
         })
-        token <- OptionT.liftF(securedRequestHandler.authenticator.create(user.id))
+        token <- OptionT.liftF(authHandler.authenticator.create(user.id))
       } yield (user, token)
 
       action.value.flatMap {
         case Some((user, token)) =>
-          Ok(user.id.asJson).map(securedRequestHandler.authenticator.embed(_, token))
+          Ok(user.id.asJson).map(authHandler.authenticator.embed(_, token))
         case None =>
           Unauthorized(
             `WWW-Authenticate`(NonEmptyList.of(Challenge("Basic", "Local Locals"))),
