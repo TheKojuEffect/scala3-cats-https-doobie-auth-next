@@ -1,5 +1,5 @@
-import React from 'react';
-import {createStyles, fade, makeStyles, Theme} from '@material-ui/core/styles';
+import React, {useState} from 'react';
+import {fade, makeStyles, Theme} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -11,9 +11,9 @@ import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import {Button} from "@material-ui/core";
 import {PeopleOutline} from "@material-ui/icons";
+import SignUpButton from "./SignUpButton";
 
-const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
+const useStyles = makeStyles((theme: Theme) => ({
         grow: {
             flexGrow: 1,
         },
@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function NavBar() {
     const classes = useStyles();
-    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
+    const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
 
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
     const handleMobileMenuClose = () => {
@@ -89,6 +89,7 @@ export default function NavBar() {
     const handleMobileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
+
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
         <Menu
@@ -104,7 +105,7 @@ export default function NavBar() {
                 <Button color="inherit">Log In</Button>
             </MenuItem>
             <MenuItem>
-                <Button color="inherit">Sign Up</Button>
+                <SignUpButton/>
             </MenuItem>
         </Menu>
     );
@@ -140,7 +141,7 @@ export default function NavBar() {
                     <div className={classes.grow}/>
                     <div className={classes.sectionDesktop}>
                         <Button color="inherit">Log In</Button>
-                        <Button color="inherit">Sign Up</Button>
+                        <SignUpButton/>
                     </div>
                     <div className={classes.sectionMobile}>
                         <IconButton
@@ -156,6 +157,7 @@ export default function NavBar() {
                 </Toolbar>
             </AppBar>
             {renderMobileMenu}
+
         </div>
     );
 }
