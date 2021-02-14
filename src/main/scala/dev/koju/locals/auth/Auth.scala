@@ -18,7 +18,7 @@ import scala.concurrent.duration.DurationInt
 
 object Auth {
 
-  type AuthHandler[F] = SecuredRequestHandler[F, UserId, User, AuthEncryptedCookie[AES128GCM, UserId]]
+  type AuthHandler[F[_]] = SecuredRequestHandler[F, UserId, User, AuthEncryptedCookie[AES128GCM, UserId]]
 
   def authHandler[F[_]: Sync](
       identityStore: IdentityStore[F, UserId, User],

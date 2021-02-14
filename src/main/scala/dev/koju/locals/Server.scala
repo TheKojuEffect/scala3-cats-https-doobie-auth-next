@@ -19,7 +19,7 @@ import tsec.passwordhashers.jca.BCrypt
 object Server {
   def create[F[_]: ConcurrentEffect: ContextShift: Timer]: Resource[F, HttpServer[F]] =
     for {
-      conf <- Resource.liftF(parser.decodePathF[F, AppConfig]("locals"))
+      conf <- Resource.liftF(parser.decodePathF[F, AppConfig]("nepalius"))
       serverContext <- ExecutionContexts.cachedThreadPool[F]
       transactor <- DatabaseSetup.dbTransactor(conf.db)
       userRepo = UserRepository[F](transactor)

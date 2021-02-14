@@ -9,13 +9,13 @@ object RootPage {
   def index: TypedTag[String] =
     html(
       head(
-        scalatags.Text.tags2.title("Local Locals"),
+        scalatags.Text.tags2.title("NepaliUS"),
         meta(charset := "UTF-8"),
       ),
       body(
         div(
-          h1(id := "title", "Local Locals"),
-          p("Local communities in US"),
+          h1(id := "title", "NepaliUS"),
+          p("Nepali communities in US"),
         ),
       ),
     )

@@ -10,8 +10,8 @@ val TSecVersion = "0.2.1"
 
 lazy val root = (project in file("."))
   .settings(
-    organization := "dev.koju",
-    name := "local-locals",
+    organization := "com.nepalius",
+    name := "NepaliUS",
     version := "0.0.1-SNAPSHOT",
     scalaVersion := "2.13.3",
     libraryDependencies ++= Seq(

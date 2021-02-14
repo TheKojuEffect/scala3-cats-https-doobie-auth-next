@@ -1,16 +1,14 @@
-Local Locals
+NepaliUS
 ==============
-Connect with local people from your ethnic country
+Connect with Nepali communities in US
 
 
 ## Getting Started
 
-This project targets **Java 11**.
-
 Start up sbt:
 
 ```bash
-sbt --java-home {your.java.11.location}
+./sbt
 ```
 
 Once sbt has loaded, you can start up the application

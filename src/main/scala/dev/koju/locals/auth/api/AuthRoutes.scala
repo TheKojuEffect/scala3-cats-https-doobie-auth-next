@@ -4,8 +4,7 @@ import cats.data.{NonEmptyList, OptionT}
 import cats.effect.Sync
 import cats.implicits._
 import dev.koju.locals.auth.Auth.AuthHandler
-import dev.koju.locals.user.domain.User.UserId
-import dev.koju.locals.user.domain.{User, UserService}
+import dev.koju.locals.user.domain.UserService
 import io.circe.generic.auto._
 import io.circe.syntax._
 import org.http4s.circe.{jsonOf, _}
@@ -13,8 +12,6 @@ import org.http4s.dsl.Http4sDsl
 import org.http4s.headers.`WWW-Authenticate`
 import org.http4s.server.Router
 import org.http4s.{Challenge, EntityDecoder, HttpRoutes}
-import tsec.authentication.{AuthEncryptedCookie, SecuredRequestHandler}
-import tsec.cipher.symmetric.jca.AES128GCM
 import tsec.common.Verified
 import tsec.passwordhashers.{PasswordHash, PasswordHasher}
 
@@ -56,7 +53,7 @@ object AuthRoutes {
           Ok(user.id.asJson).map(authHandler.authenticator.embed(_, token))
         case None =>
           Unauthorized(
-            `WWW-Authenticate`(NonEmptyList.of(Challenge("Basic", "Local Locals"))),
+            `WWW-Authenticate`(NonEmptyList.of(Challenge("Basic", "NepaliUS"))),
             "Invalid email or password.",
           )
       }
