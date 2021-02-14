@@ -1,17 +1,14 @@
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles, Theme} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {Dialog, DialogContent, DialogTitle, IconButton, InputLabel, Select, useMediaQuery, useTheme} from "@material-ui/core";
+import {Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme} from "@material-ui/core";
 import {Close} from "@material-ui/icons";
-import CountrySelect from "./CountrySelect";
 import StateSelect from "./StateSelect";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -31,9 +28,9 @@ const useStyles = makeStyles((theme: Theme) => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
-    close : {
+    close: {
         padding: '0 10px',
-        textAlign:'end',
+        textAlign: 'end',
         lineHeight: '1rem',
     },
 }));
@@ -54,9 +51,9 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
             onClose={onClose}
             fullScreen={fullScreen}
         >
-            <DialogTitle className={classes.close} >
+            <DialogTitle className={classes.close}>
                 <IconButton edge="end" color="inherit" onClick={onClose} aria-label="close">
-                    <Close />
+                    <Close/>
                 </IconButton>
             </DialogTitle>
             <DialogContent>
@@ -72,12 +69,11 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={6}>
                                     <TextField
-                                        autoComplete="fname"
+                                        autoComplete="given-name"
                                         name="firstName"
                                         variant="outlined"
                                         required
                                         fullWidth
-                                        id="firstName"
                                         label="First Name"
                                         autoFocus
                                     />
@@ -87,14 +83,10 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
                                         variant="outlined"
                                         required
                                         fullWidth
-                                        id="lastName"
                                         label="Last Name"
                                         name="lastName"
-                                        autoComplete="lname"
+                                        autoComplete="family-name"
                                     />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <CountrySelect/>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <StateSelect/>

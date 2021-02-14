@@ -20,7 +20,6 @@ export default function StateSelect() {
 
     return (
         <Autocomplete
-            id="state-select"
             options={states}
             classes={{
                 option: classes.option,
@@ -44,12 +43,12 @@ export default function StateSelect() {
             renderInput={(params) => (
                 <TextField
                     {...params}
-                    label="US Address State"
-                    helperText="Which state do you live now in US?"
+                    required
+                    label="State"
                     variant="outlined"
                     inputProps={{
                         ...params.inputProps,
-                        autoComplete: 'new-password', // disable autocomplete and autofill
+                        autoComplete: 'address-level1',
                     }}
                 />
             )}
