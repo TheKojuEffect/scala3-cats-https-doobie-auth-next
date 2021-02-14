@@ -1,4 +1,4 @@
-package dev.koju.locals.view
+package com.nepalius.view
 
 import cats.effect.Sync
 import org.http4s.HttpRoutes

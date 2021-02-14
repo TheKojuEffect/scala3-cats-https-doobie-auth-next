@@ -1,10 +1,10 @@
-package dev.koju.locals.auth.api
+package com.nepalius.auth.api
 
 import cats.data.{NonEmptyList, OptionT}
 import cats.effect.Sync
 import cats.implicits._
-import dev.koju.locals.auth.Auth.AuthHandler
-import dev.koju.locals.user.domain.UserService
+import com.nepalius.user.domain.UserService
+import com.nepalius.auth.Auth.AuthHandler
 import io.circe.generic.auto._
 import io.circe.syntax._
 import org.http4s.circe.{jsonOf, _}

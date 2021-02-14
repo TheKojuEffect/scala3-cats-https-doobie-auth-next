@@ -1,9 +1,9 @@
-package dev.koju.locals.user.domain
+package com.nepalius.user.domain
 
 import cats.FlatMap
 import cats.data.OptionT
 import cats.implicits._
-import dev.koju.locals.user.domain.User.UserId
+import User.UserId
 import tsec.passwordhashers.PasswordHasher
 
 trait UserService[F[_]] {

@@ -1,4 +1,4 @@
-package dev.koju.locals.view
+package com.nepalius.view
 
 import scalatags.Text.TypedTag
 import scalatags.Text.all.{body, div, h1, head, html, id, p, _}

@@ -1,4 +1,4 @@
-package dev.koju.locals.config
+package com.nepalius.config
 
 import io.circe.Decoder
 import io.circe.generic.semiauto.deriveDecoder

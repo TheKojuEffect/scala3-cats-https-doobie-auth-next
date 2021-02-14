@@ -1,10 +1,11 @@
-package dev.koju.locals.user.repo
+package com.nepalius.user.repo
 
 import cats.data.OptionT
 import cats.effect.Bracket
 import cats.implicits._
-import dev.koju.locals.user.domain.User.UserId
-import dev.koju.locals.user.domain.{NormalUser, User, UserProfile, UserRepo}
+import com.nepalius.user.domain.{User, UserProfile, UserRepo}
+import User.UserId
+import com.nepalius.user.domain.NormalUser
 import doobie.implicits._
 import doobie.postgres.implicits._
 import doobie.util.query.Query0

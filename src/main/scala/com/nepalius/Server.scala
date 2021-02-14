@@ -1,14 +1,15 @@
-package dev.koju.locals
+package com.nepalius
 
 import cats.effect.{ConcurrentEffect, ContextShift, Resource, Timer}
 import cats.implicits._
-import dev.koju.locals.auth.Auth
-import dev.koju.locals.auth.api.AuthRoutes
-import dev.koju.locals.config.{AppConfig, DatabaseSetup}
-import dev.koju.locals.user.api.NormalUserRoutes
-import dev.koju.locals.user.domain.UserService
-import dev.koju.locals.user.repo.UserRepository
-import dev.koju.locals.view.ViewRoutes
+import com.nepalius.auth.Auth
+import com.nepalius.auth.api.AuthRoutes
+import com.nepalius.config.AppConfig
+import com.nepalius.user.api.NormalUserRoutes
+import com.nepalius.user.domain.UserService
+import com.nepalius.user.repo.UserRepository
+import com.nepalius.view.ViewRoutes
+import com.nepalius.config.DatabaseSetup
 import doobie.util.ExecutionContexts
 import io.circe.config.parser
 import org.http4s.implicits._

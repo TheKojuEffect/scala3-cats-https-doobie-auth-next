@@ -1,7 +1,7 @@
-package dev.koju.locals.user.domain
+package com.nepalius.user.domain
 
 import cats.data.OptionT
-import dev.koju.locals.user.domain.User.UserId
+import User.UserId
 
 trait UserRepo[F[_]] {
 

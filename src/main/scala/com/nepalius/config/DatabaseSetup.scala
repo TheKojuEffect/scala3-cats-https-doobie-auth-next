@@ -1,4 +1,4 @@
-package dev.koju.locals.config
+package com.nepalius.config
 
 import cats.effect.{Async, Blocker, ContextShift, Resource, Sync}
 import cats.syntax.functor._

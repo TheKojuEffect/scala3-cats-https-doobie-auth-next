@@ -1,9 +1,9 @@
-package dev.koju.locals.user.api
+package com.nepalius.user.api
 
 import cats.effect.Sync
 import cats.implicits._
-import dev.koju.locals.auth.Auth.AuthHandler
-import dev.koju.locals.user.domain.{SignUpRequest, UserProfile, UserService}
+import com.nepalius.auth.Auth.AuthHandler
+import com.nepalius.user.domain.{SignUpRequest, UserProfile, UserService}
 import io.circe.generic.auto._
 import io.circe.syntax._
 import org.http4s.circe._

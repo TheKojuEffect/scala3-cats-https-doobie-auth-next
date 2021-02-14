@@ -1,4 +1,4 @@
-package dev.koju.locals
+package com.nepalius
 
 import cats.effect.{ExitCode, IO, IOApp}
 

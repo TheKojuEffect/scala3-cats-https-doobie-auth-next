@@ -1,4 +1,4 @@
-package dev.koju.locals.user.domain
+package com.nepalius.user.domain
 
 import java.util.UUID
 

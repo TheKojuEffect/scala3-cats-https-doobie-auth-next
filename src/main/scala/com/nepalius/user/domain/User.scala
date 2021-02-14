@@ -1,9 +1,9 @@
-package dev.koju.locals.user.domain
+package com.nepalius.user.domain
 
 import java.util.UUID
 
 import cats.Applicative
-import dev.koju.locals.user.domain.User.UserId
+import User.UserId
 import tsec.authorization.AuthorizationInfo
 
 case class User(
