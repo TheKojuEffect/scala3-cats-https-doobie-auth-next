@@ -123,7 +123,7 @@ export default function NavBar() {
                         <PeopleOutline/>
                     </IconButton>
                     <Typography className={classes.title} variant="h6" noWrap>
-                        Local Homies
+                        NepaliUS
                     </Typography>
                     <div className={classes.search}>
                         <div className={classes.searchIcon}>
