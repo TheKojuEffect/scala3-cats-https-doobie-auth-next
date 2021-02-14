@@ -13,7 +13,7 @@ lazy val root = (project in file("."))
     organization := "com.nepalius",
     name := "NepaliUS",
     version := "0.0.1-SNAPSHOT",
-    scalaVersion := "2.13.3",
+    scalaVersion := "2.13.4",
     libraryDependencies ++= Seq(
       "org.http4s" %% "http4s-blaze-server" % Http4sVersion,
       "org.http4s" %% "http4s-circe" % Http4sVersion,
@@ -32,7 +32,7 @@ lazy val root = (project in file("."))
       "io.github.jmcardon" %% "tsec-password" % TSecVersion,
       "io.github.jmcardon" %% "tsec-http4s" % TSecVersion,
     ),
-    addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.0" cross CrossVersion.full),
+    addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.3" cross CrossVersion.full),
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
   )
 
