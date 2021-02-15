@@ -9,7 +9,7 @@ import {makeStyles, Theme} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import {Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme} from "@material-ui/core";
 import {Close} from "@material-ui/icons";
-import StateSelect from "./StateSelect";
+import {useForm} from "react-hook-form";
 
 const useStyles = makeStyles((theme: Theme) => ({
     paper: {
@@ -40,10 +40,21 @@ interface SignUpDialogProps {
     onClose: () => void;
 }
 
+type SignUpRequest = {
+    firstName: string,
+    lastName: string,
+    state: string,
+    email: string,
+    password: string
+};
+
 export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
     const classes = useStyles();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
+    const {register, handleSubmit, watch, errors} = useForm<SignUpRequest>();
+    const onSubmit = (data: SignUpRequest) => console.log(JSON.stringify(data));
 
     return (
         <Dialog
@@ -65,7 +76,7 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
                         <Typography component="h1" variant="h5">
                             Sign up
                         </Typography>
-                        <form className={classes.form} noValidate>
+                        <form className={classes.form} noValidate onSubmit={handleSubmit(onSubmit)}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={6}>
                                     <TextField
@@ -76,6 +87,10 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
                                         fullWidth
                                         label="First Name"
                                         autoFocus
+                                        inputRef={register({
+                                            required: true
+                                        })}
+                                        error={!!errors.firstName}
                                     />
                                 </Grid>
                                 <Grid item xs={12} sm={6}>
@@ -86,20 +101,38 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
                                         label="Last Name"
                                         name="lastName"
                                         autoComplete="family-name"
+                                        inputRef={register({
+                                            required: true
+                                        })}
+                                        error={!!errors.lastName}
                                     />
-                                </Grid>
-                                <Grid item xs={12}>
-                                    <StateSelect/>
                                 </Grid>
                                 <Grid item xs={12}>
                                     <TextField
                                         variant="outlined"
                                         required
                                         fullWidth
-                                        id="email"
+                                        label="State"
+                                        name="state"
+                                        autoComplete="address-level1"
+                                        inputRef={register({
+                                            required: true
+                                        })}
+                                        error={!!errors.state}
+                                    />
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
                                         label="Email Address"
                                         name="email"
                                         autoComplete="email"
+                                        inputRef={register({
+                                            required: true
+                                        })}
+                                        error={!!errors.email}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -110,8 +143,11 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
                                         name="password"
                                         label="Password"
                                         type="password"
-                                        id="password"
-                                        autoComplete="current-password"
+                                        autoComplete="new-password"
+                                        inputRef={register({
+                                            required: true
+                                        })}
+                                        error={!!errors.password}
                                     />
                                 </Grid>
                             </Grid>
