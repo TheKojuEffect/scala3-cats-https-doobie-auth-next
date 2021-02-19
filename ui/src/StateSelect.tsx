@@ -26,16 +26,10 @@ export default function StateSelect({onChange, error}: StateSelectProps) {
     return (
         <Autocomplete
             options={States}
-            classes={{
-                option: classes.option,
-            }}
+            classes={{option: classes.option}}
             autoHighlight
-            getOptionLabel={option => option.label}
-            renderOption={(option) => (
-                <>
-                    {option.label} ({option.code})
-                </>
-            )}
+            getOptionLabel={option => `${option.label} (${option.code})`}
+            renderOption={option => <>{option.label} ({option.code})</>}
             onChange={(event, value) => onChange(value)}
             filterOptions={
                 (options: State[], state: FilterOptionsState<State>) => {
