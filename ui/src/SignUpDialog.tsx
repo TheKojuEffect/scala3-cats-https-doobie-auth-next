@@ -7,9 +7,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles, Theme} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme} from "@material-ui/core";
+import {Dialog, DialogContent, DialogTitle, FormControl, IconButton, InputLabel, MenuItem, Select, useMediaQuery, useTheme} from "@material-ui/core";
 import {Close} from "@material-ui/icons";
-import {useForm} from "react-hook-form";
+import {useForm, Controller} from "react-hook-form";
+import {State, states} from "./State";
+import StateSelect from "./StateSelect";
 
 const useStyles = makeStyles((theme: Theme) => ({
     paper: {
@@ -53,7 +55,7 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const {register, handleSubmit, watch, errors} = useForm<SignUpRequest>();
+    const {register, handleSubmit, control, errors} = useForm<SignUpRequest>();
     const onSubmit = (data: SignUpRequest) => console.log(JSON.stringify(data));
 
     return (
@@ -108,17 +110,18 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <TextField
-                                        variant="outlined"
-                                        required
-                                        fullWidth
-                                        label="State"
+                                    <Controller
                                         name="state"
-                                        autoComplete="address-level1"
-                                        inputRef={register({
-                                            required: true
-                                        })}
-                                        error={!!errors.state}
+                                        control={control}
+                                        rules={{required: true}}
+                                        render={
+                                            ({onChange}) => (
+                                                <StateSelect
+                                                    error={!!errors.state}
+                                                    onChange={(state) => {
+                                                        onChange(state?.code)
+                                                    }}/>)
+                                        }
                                     />
                                 </Grid>
                                 <Grid item xs={12}>

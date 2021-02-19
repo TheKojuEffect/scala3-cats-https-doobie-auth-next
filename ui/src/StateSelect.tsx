@@ -15,7 +15,12 @@ const useStyles = makeStyles({
     },
 });
 
-export default function StateSelect() {
+interface StateSelectProps {
+    onChange: (state: State | null) => void;
+    error?: boolean;
+}
+
+export default function StateSelect({onChange, error}: StateSelectProps) {
     const classes = useStyles();
 
     return (
@@ -31,6 +36,7 @@ export default function StateSelect() {
                     {option.label} ({option.code})
                 </>
             )}
+            onChange={(event, value) => onChange(value)}
             filterOptions={
                 (options: State[], state: FilterOptionsState<State>) => {
                     const input = state.inputValue.toLocaleLowerCase();
@@ -50,6 +56,7 @@ export default function StateSelect() {
                         ...params.inputProps,
                         autoComplete: 'address-level1',
                     }}
+                    error={error}
                 />
             )}
         />
