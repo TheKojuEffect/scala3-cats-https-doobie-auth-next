@@ -3,7 +3,7 @@ import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import {makeStyles} from '@material-ui/core/styles';
 import {FilterOptionsState} from "@material-ui/lab";
-import {State, states} from "./State";
+import {State, States} from "./State";
 
 const useStyles = makeStyles({
     option: {
@@ -25,7 +25,7 @@ export default function StateSelect({onChange, error}: StateSelectProps) {
 
     return (
         <Autocomplete
-            options={states}
+            options={States}
             classes={{
                 option: classes.option,
             }}

@@ -7,11 +7,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles, Theme} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {Dialog, DialogContent, DialogTitle, FormControl, IconButton, InputLabel, MenuItem, Select, useMediaQuery, useTheme} from "@material-ui/core";
+import {Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme} from "@material-ui/core";
 import {Close} from "@material-ui/icons";
-import {useForm, Controller} from "react-hook-form";
-import {State, states} from "./State";
+import {Controller, useForm} from "react-hook-form";
 import StateSelect from "./StateSelect";
+import {StateCode} from "./State";
 
 const useStyles = makeStyles((theme: Theme) => ({
     paper: {
@@ -45,7 +45,7 @@ interface SignUpDialogProps {
 type SignUpRequest = {
     firstName: string,
     lastName: string,
-    state: string,
+    state: StateCode,
     email: string,
     password: string
 };
