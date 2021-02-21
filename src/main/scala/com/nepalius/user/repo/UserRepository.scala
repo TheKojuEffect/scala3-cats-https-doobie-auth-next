@@ -3,9 +3,8 @@ package com.nepalius.user.repo
 import cats.data.OptionT
 import cats.effect.Bracket
 import cats.implicits._
-import com.nepalius.user.domain.{User, UserProfile, UserRepo}
-import User.UserId
-import com.nepalius.user.domain.NormalUser
+import com.nepalius.user.domain.User.UserId
+import com.nepalius.user.domain.{NormalUser, User, UserProfile, UserRepo}
 import doobie.implicits._
 import doobie.postgres.implicits._
 import doobie.util.query.Query0
@@ -63,8 +62,8 @@ private object UserSql {
     INSERT INTO users (id, email, password, role)
     VALUES (${user.id}, ${user.email}, ${user.password}, ${user.role});
     
-    INSERT INTO user_profile (user_id, first_name, last_name, city, state, ethnic_country)
-    VALUES (${user.id}, ${user.profile.firstName}, ${user.profile.lastName}, ${user.profile.city}, ${user.profile.state}, ${user.profile.ethnicCountry});
+    INSERT INTO user_profile (user_id, first_name, last_name, state)
+    VALUES (${user.id}, ${user.profile.firstName}, ${user.profile.lastName}, ${user.profile.state});
   """.update
 
   def updateProfile(userId: UserId, profile: UserProfile): Update0 =
@@ -73,9 +72,7 @@ private object UserSql {
         SET
           first_name = ${profile.firstName},
           last_name = ${profile.lastName},
-          city = ${profile.city},
-          state = ${profile.state},
-          ethnic_country = ${profile.ethnicCountry}
+          state = ${profile.state}
         WHERE user_id = $userId
        """.update
 }

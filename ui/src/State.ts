@@ -1,4 +1,4 @@
-const StateLabels = {
+export const stateLabels = Object.freeze({
     AL: "Alabama",
     AK: "Alaska",
     AZ: "Arizona",
@@ -50,14 +50,14 @@ const StateLabels = {
     WV: "West Virginia",
     WI: "Wisconsin",
     WY: "Wyoming",
-};
+});
 
-export type StateCode = keyof typeof StateLabels;
+export type StateCode = keyof typeof stateLabels;
 
 export interface State {
     code: StateCode;
-    label: string
+    name: string
 }
 
-export const States: State[] = Object.entries(StateLabels).map(([code, label]) => ({code: code as StateCode, label}))
+export const states: State[] = Object.entries(stateLabels).map(([code, label]) => ({code: code as StateCode, name: label}))
 

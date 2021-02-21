@@ -7,6 +7,9 @@ val PostgresVersion = "42.2.16"
 val FlywayVersion = "7.0.4"
 val ScalaTagsVersion = "0.9.1"
 val TSecVersion = "0.2.1"
+val EnumeratumVersion = "1.6.1"
+val EnumeratumDoobieVersion = "1.6.0"
+val EnumeratumCirceVersion = "1.6.1"
 
 lazy val root = (project in file("."))
   .settings(
@@ -31,6 +34,9 @@ lazy val root = (project in file("."))
       "io.github.jmcardon" %% "tsec-common" % TSecVersion,
       "io.github.jmcardon" %% "tsec-password" % TSecVersion,
       "io.github.jmcardon" %% "tsec-http4s" % TSecVersion,
+      "com.beachape" %% "enumeratum" % EnumeratumVersion,
+      "com.beachape" %% "enumeratum-doobie" % EnumeratumDoobieVersion,
+      "com.beachape" %% "enumeratum-circe" % EnumeratumCirceVersion,
     ),
     addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.3" cross CrossVersion.full),
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
