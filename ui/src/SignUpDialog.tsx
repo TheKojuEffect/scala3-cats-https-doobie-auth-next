@@ -7,11 +7,11 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles, Theme} from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import {Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme} from "@material-ui/core";
-import {Close} from "@material-ui/icons";
-import {Controller, useForm} from "react-hook-form";
-import StateSelect from "./StateSelect";
-import {StateCode} from "./State";
+import {Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme} from '@material-ui/core';
+import {Close} from '@material-ui/icons';
+import {Controller, useForm} from 'react-hook-form';
+import StateSelect from './StateSelect';
+import {StateCode} from './State';
 
 const useStyles = makeStyles((theme: Theme) => ({
     paper: {
@@ -56,7 +56,16 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     const {register, handleSubmit, control, errors} = useForm<SignUpRequest>();
-    const onSubmit = (data: SignUpRequest) => console.log(JSON.stringify(data));
+    const onSubmit = (data: SignUpRequest) => {
+        fetch('/normal-users', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data),
+            }
+        ).then(onClose)
+    }
 
     return (
         <Dialog
@@ -114,6 +123,7 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
                                         name="state"
                                         control={control}
                                         rules={{required: true}}
+                                        defaultValue={null}
                                         render={
                                             ({onChange}) => (
                                                 <StateSelect
