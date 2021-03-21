@@ -12,6 +12,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import {Button} from "@material-ui/core";
 import {PeopleOutline} from "@material-ui/icons";
 import SignUpButton from "./SignUpButton";
+import SignInButton from "./SignInButton";
 
 const useStyles = makeStyles((theme: Theme) => ({
         grow: {
@@ -102,7 +103,7 @@ export default function NavBar() {
             onClose={handleMobileMenuClose}
         >
             <MenuItem>
-                <Button color="inherit">Log In</Button>
+                <SignInButton/>
             </MenuItem>
             <MenuItem>
                 <SignUpButton/>
@@ -140,7 +141,7 @@ export default function NavBar() {
                     </div>
                     <div className={classes.grow}/>
                     <div className={classes.sectionDesktop}>
-                        <Button color="inherit">Log In</Button>
+                        <SignInButton/>
                         <SignUpButton/>
                     </div>
                     <div className={classes.sectionMobile}>
@@ -157,7 +158,6 @@ export default function NavBar() {
                 </Toolbar>
             </AppBar>
             {renderMobileMenu}
-
         </div>
     );
 }
