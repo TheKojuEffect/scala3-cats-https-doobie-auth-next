@@ -1,17 +1,16 @@
 package com.nepalius.auth.api
 
-import cats.data.{NonEmptyList, OptionT}
+import cats.data.OptionT
 import cats.effect.Sync
 import cats.implicits._
-import com.nepalius.user.domain.UserService
 import com.nepalius.auth.Auth.AuthHandler
+import com.nepalius.user.domain.UserService
 import io.circe.generic.auto._
 import io.circe.syntax._
 import org.http4s.circe.{jsonOf, _}
 import org.http4s.dsl.Http4sDsl
-import org.http4s.headers.`WWW-Authenticate`
 import org.http4s.server.Router
-import org.http4s.{Challenge, EntityDecoder, HttpRoutes}
+import org.http4s.{EntityDecoder, HttpRoutes}
 import tsec.common.Verified
 import tsec.passwordhashers.{PasswordHash, PasswordHasher}
 
@@ -52,10 +51,7 @@ object AuthRoutes {
         case Some((user, token)) =>
           Ok(user.id.asJson).map(authHandler.authenticator.embed(_, token))
         case None =>
-          Unauthorized(
-            `WWW-Authenticate`(NonEmptyList.of(Challenge("Basic", "NepaliUS"))),
-            "Invalid email or password.",
-          )
+          Forbidden("Invalid email or password.")
       }
     }
   }
