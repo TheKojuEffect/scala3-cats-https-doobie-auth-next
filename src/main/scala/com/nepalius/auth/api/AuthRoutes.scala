@@ -1,5 +1,6 @@
 package com.nepalius.auth.api
 
+import cats.Monad
 import cats.data.OptionT
 import cats.effect.Sync
 import cats.implicits._
@@ -11,6 +12,7 @@ import org.http4s.circe.{jsonOf, _}
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.Router
 import org.http4s.{EntityDecoder, HttpRoutes}
+import tsec.authentication.{TSecAuthService, asAuthed}
 import tsec.common.Verified
 import tsec.passwordhashers.{PasswordHash, PasswordHasher}
 
@@ -22,6 +24,7 @@ object AuthRoutes {
       authHandler: AuthHandler[F],
   ): HttpRoutes[F] = Router(
     "login" -> logIn(userService, passwordHasher, authHandler),
+    "current-user" -> currentUser(authHandler),
   )
 
   def logIn[F[_]: Sync, A](
@@ -54,5 +57,18 @@ object AuthRoutes {
           Forbidden("Invalid email or password.")
       }
     }
+  }
+
+  def currentUser[F[_]: Monad](
+      authHandler: AuthHandler[F],
+  ): HttpRoutes[F] = {
+    val dsl = Http4sDsl[F]
+    import dsl._
+
+    authHandler.liftService(
+      TSecAuthService { case GET -> Root asAuthed user =>
+        Ok(user.asJson)
+      },
+    )
   }
 }
