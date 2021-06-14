@@ -20,7 +20,7 @@ import tsec.passwordhashers.jca.BCrypt
 object Server {
   def create[F[_]: ConcurrentEffect: ContextShift: Timer]: Resource[F, HttpServer[F]] =
     for {
-      conf <- Resource.liftF(parser.decodePathF[F, AppConfig]("nepalius"))
+      conf <- Resource.eval(parser.decodePathF[F, AppConfig]("nepalius"))
       serverContext <- ExecutionContexts.cachedThreadPool[F]
       transactor <- DatabaseSetup.dbTransactor(conf.db)
       userRepo = UserRepository[F](transactor)
@@ -32,7 +32,7 @@ object Server {
           AuthRoutes.routes(userService, passwordHasher, authHandler) <+>
           NormalUserRoutes.routes(userService, authHandler)
       ).orNotFound
-      _ <- Resource.liftF(DatabaseSetup.initDb(conf.db))
+      _ <- Resource.eval(DatabaseSetup.initDb(conf.db))
       server <- BlazeServerBuilder[F](serverContext)
         .bindHttp(conf.server.port, conf.server.host)
         .withHttpApp(httpApp)

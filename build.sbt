@@ -1,11 +1,11 @@
-val Http4sVersion = "0.21.19"
-val CirceVersion = "0.13.0"
+val Http4sVersion = "0.21.24"
+val CirceVersion = "0.14.1"
 val CirceConfigVersion = "0.8.0"
 val LogbackVersion = "1.2.3"
-val DoobieVersion = "0.10.0"
-val PostgresVersion = "42.2.19"
-val FlywayVersion = "7.5.3"
-val ScalaTagsVersion = "0.9.3"
+val DoobieVersion = "0.13.4"
+val PostgresVersion = "42.2.21"
+val FlywayVersion = "7.10.0"
+val ScalaTagsVersion = "0.9.4"
 val TSecVersion = "0.2.1"
 val EnumeratumVersion = "1.6.1"
 val EnumeratumDoobieVersion = "1.6.0"
@@ -16,7 +16,7 @@ lazy val root = (project in file("."))
     organization := "com.nepalius",
     name := "NepaliUS",
     version := "0.0.1-SNAPSHOT",
-    scalaVersion := "2.13.4",
+    scalaVersion := "2.13.6",
     libraryDependencies ++= Seq(
       "org.http4s" %% "http4s-blaze-server" % Http4sVersion,
       "org.http4s" %% "http4s-circe" % Http4sVersion,
@@ -38,7 +38,7 @@ lazy val root = (project in file("."))
       "com.beachape" %% "enumeratum-doobie" % EnumeratumDoobieVersion,
       "com.beachape" %% "enumeratum-circe" % EnumeratumCirceVersion,
     ),
-    addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.11.3" cross CrossVersion.full),
+    addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.13.0" cross CrossVersion.full),
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
   )
 
