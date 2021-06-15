@@ -9,10 +9,10 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import {Button} from "@material-ui/core";
 import {PeopleOutline} from "@material-ui/icons";
 import SignUpButton from "./SignUpButton";
 import SignInButton from "./SignInButton";
+import {useAuth} from "./auth/Auth";
 
 const useStyles = makeStyles((theme: Theme) => ({
         grow: {
@@ -91,6 +91,9 @@ export default function NavBar() {
         setMobileMoreAnchorEl(event.currentTarget);
     };
 
+    const {loading, authenticated} = useAuth();
+    const showSignIn = !loading && !authenticated;
+
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
         <Menu
@@ -140,24 +143,30 @@ export default function NavBar() {
                         />
                     </div>
                     <div className={classes.grow}/>
-                    <div className={classes.sectionDesktop}>
-                        <SignInButton/>
-                        <SignUpButton/>
-                    </div>
-                    <div className={classes.sectionMobile}>
-                        <IconButton
-                            aria-label="show more"
-                            aria-controls={mobileMenuId}
-                            aria-haspopup="true"
-                            onClick={handleMobileMenuOpen}
-                            color="inherit"
-                        >
-                            <MoreIcon/>
-                        </IconButton>
-                    </div>
+                    {
+                        showSignIn
+                        &&
+                        <>
+                            <div className={classes.sectionDesktop}>
+                                <SignInButton/>
+                                <SignUpButton/>
+                            </div>
+                            <div className={classes.sectionMobile}>
+                                <IconButton
+                                    aria-label="show more"
+                                    aria-controls={mobileMenuId}
+                                    aria-haspopup="true"
+                                    onClick={handleMobileMenuOpen}
+                                    color="inherit"
+                                >
+                                    <MoreIcon/>
+                                </IconButton>
+                            </div>
+                        </>
+                    }
                 </Toolbar>
             </AppBar>
-            {renderMobileMenu}
+            {showSignIn && renderMobileMenu}
         </div>
     );
 }

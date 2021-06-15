@@ -11,6 +11,7 @@ import Container from '@material-ui/core/Container';
 import {Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme} from "@material-ui/core";
 import {Close} from "@material-ui/icons";
 import {useForm} from "react-hook-form";
+import {useAuth} from "./auth/Auth";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -50,6 +51,7 @@ export default function SignInDialog({open, onClose}: SignInDialogProps) {
     const classes = useStyles();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const {refreshAuth} = useAuth();
 
     const {register, handleSubmit, control, errors} = useForm<SignInRequest>();
     const onSubmit = (data: SignInRequest) => {
@@ -60,7 +62,9 @@ export default function SignInDialog({open, onClose}: SignInDialogProps) {
                 },
                 body: JSON.stringify(data),
             }
-        ).then(onClose)
+        )
+            .then(onClose)
+            .then(refreshAuth)
     }
 
     return (
