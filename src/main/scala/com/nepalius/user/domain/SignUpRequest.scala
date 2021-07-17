@@ -8,12 +8,13 @@ final case class SignUpRequest(
     firstName: String,
     lastName: String,
     state: State,
+    zipCode: String,
 ) {
   def asNormalUser[A](passwordHash: String): NormalUser =
     NormalUser(
       UUID.randomUUID(),
       email,
       passwordHash,
-      UserProfile(firstName, lastName, state),
+      UserProfile(firstName, lastName, state, zipCode),
     )
 }

@@ -46,6 +46,7 @@ type SignUpRequest = {
     firstName: string,
     lastName: string,
     state: StateCode,
+    zipCode: string,
     email: string,
     password: string
 };
@@ -118,7 +119,7 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
                                         error={!!errors.lastName}
                                     />
                                 </Grid>
-                                <Grid item xs={12}>
+                                <Grid item xs={12} sm={6}>
                                     <Controller
                                         name="state"
                                         control={control}
@@ -132,6 +133,20 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
                                                         onChange(state?.code)
                                                     }}/>)
                                         }
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={6}>
+                                    <TextField
+                                        variant="outlined"
+                                        required
+                                        fullWidth
+                                        label="Zip Code"
+                                        name="zipCode"
+                                        autoComplete="postal_code"
+                                        inputRef={register({
+                                            required: true
+                                        })}
+                                        error={!!errors.zipCode}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>

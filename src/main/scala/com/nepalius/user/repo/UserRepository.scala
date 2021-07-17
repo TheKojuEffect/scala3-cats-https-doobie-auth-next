@@ -62,8 +62,8 @@ private object UserSql {
     INSERT INTO users (id, email, password, role)
     VALUES (${user.id}, ${user.email}, ${user.password}, ${user.role});
     
-    INSERT INTO user_profile (user_id, first_name, last_name, state)
-    VALUES (${user.id}, ${user.profile.firstName}, ${user.profile.lastName}, ${user.profile.state});
+    INSERT INTO user_profile (user_id, first_name, last_name, state, zip_code)
+    VALUES (${user.id}, ${user.profile.firstName}, ${user.profile.lastName}, ${user.profile.state}, ${user.profile.zipCode});
   """.update
 
   def updateProfile(userId: UserId, profile: UserProfile): Update0 =
