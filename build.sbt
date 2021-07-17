@@ -3,13 +3,11 @@ val CirceVersion = "0.14.1"
 val CirceConfigVersion = "0.8.0"
 val LogbackVersion = "1.2.3"
 val DoobieVersion = "0.13.4"
-val PostgresVersion = "42.2.21"
-val FlywayVersion = "7.10.0"
+val PostgresVersion = "42.2.23"
+val FlywayVersion = "7.11.2"
 val ScalaTagsVersion = "0.9.4"
 val TSecVersion = "0.2.1"
-val EnumeratumVersion = "1.6.1"
-val EnumeratumDoobieVersion = "1.6.0"
-val EnumeratumCirceVersion = "1.6.1"
+val EnumeratumVersion = "1.7.0"
 
 lazy val root = (project in file("."))
   .settings(
@@ -35,8 +33,8 @@ lazy val root = (project in file("."))
       "io.github.jmcardon" %% "tsec-password" % TSecVersion,
       "io.github.jmcardon" %% "tsec-http4s" % TSecVersion,
       "com.beachape" %% "enumeratum" % EnumeratumVersion,
-      "com.beachape" %% "enumeratum-doobie" % EnumeratumDoobieVersion,
-      "com.beachape" %% "enumeratum-circe" % EnumeratumCirceVersion,
+      "com.beachape" %% "enumeratum-doobie" % EnumeratumVersion,
+      "com.beachape" %% "enumeratum-circe" % EnumeratumVersion,
     ),
     addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.13.0" cross CrossVersion.full),
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
