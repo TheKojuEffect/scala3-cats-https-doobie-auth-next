@@ -1,32 +1,40 @@
 import React, {FC, useContext, useEffect, useState} from "react";
 
+export enum AuthStatus {
+    UNAUTHENTICATED,
+    LOADING,
+    AUTHENTICATED,
+}
+
 type Auth = {
+    status: AuthStatus;
+    unauthenticated: boolean;
     loading: boolean;
     authenticated: boolean;
-    refreshAuth: () => void
+    refreshAuth: () => void;
 }
 
 const AuthContext = React.createContext<Auth | undefined>(undefined);
 
 export const AuthProvider: FC = ({children}) => {
-    const [loading, setLoading] = useState(false);
-    const [authenticated, setAuthenticated] = useState(false);
+    let [status, setStatus] = useState(AuthStatus.UNAUTHENTICATED);
 
     function refreshAuth() {
-        setLoading(true);
+        setStatus(AuthStatus.LOADING);
         fetch('/current-user')
-            .then(({status}) => {
-                setAuthenticated(status === 200);
-            })
-            .finally(() => {
-                setLoading(false);
+            .then((response) => {
+                setStatus(response.status === 200 ? AuthStatus.AUTHENTICATED : AuthStatus.UNAUTHENTICATED);
             });
     }
 
     useEffect(refreshAuth, []);
 
+    const loading = status === AuthStatus.LOADING;
+    const authenticated = status === AuthStatus.AUTHENTICATED;
+    const unauthenticated = status === AuthStatus.UNAUTHENTICATED;
+
     return (
-        <AuthContext.Provider value={{loading, authenticated, refreshAuth}}>
+        <AuthContext.Provider value={{status, unauthenticated, loading, authenticated, refreshAuth}}>
             {children}
         </AuthContext.Provider>
     );
