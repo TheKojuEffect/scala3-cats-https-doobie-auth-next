@@ -11,7 +11,7 @@ import io.circe.syntax._
 import org.http4s.circe.{jsonOf, _}
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.Router
-import org.http4s.{EntityDecoder, HttpRoutes}
+import org.http4s.{EntityDecoder, HttpRoutes, Response}
 import tsec.authentication.{TSecAuthService, asAuthed}
 import tsec.common.Verified
 import tsec.passwordhashers.{PasswordHash, PasswordHasher}
@@ -24,6 +24,7 @@ object AuthRoutes {
       authHandler: AuthHandler[F],
   ): HttpRoutes[F] = Router(
     "login" -> logIn(userService, passwordHasher, authHandler),
+    "logout" -> logOut(authHandler),
     "current-user" -> currentUser(authHandler),
   )
 
@@ -57,6 +58,16 @@ object AuthRoutes {
           Forbidden("Invalid email or password.")
       }
     }
+  }
+
+  def logOut[F[_]: Monad](authHandler: AuthHandler[F]): HttpRoutes[F] = {
+    val dsl = Http4sDsl[F]
+    import dsl._
+    authHandler.liftService(
+      TSecAuthService { case req @ POST -> Root asAuthed _ =>
+        Response[F]().removeCookie(req.authenticator.toCookie.copy(content = "")).pure[F]
+      },
+    )
   }
 
   def currentUser[F[_]: Monad](
