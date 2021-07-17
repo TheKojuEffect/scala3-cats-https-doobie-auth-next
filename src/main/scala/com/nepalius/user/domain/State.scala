@@ -1,9 +1,10 @@
 package com.nepalius.user.domain
 import enumeratum._
 
-sealed abstract class State(name: String) extends EnumEntry {
-  print(name)
-}
+import scala.annotation.nowarn
+
+sealed abstract class State(@nowarn("cat=unused-params") name: String) extends EnumEntry
+
 object State extends Enum[State] with DoobieEnum[State] with CirceEnum[State] {
 
   val values: IndexedSeq[State] = findValues

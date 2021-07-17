@@ -41,3 +41,4 @@ lazy val root = (project in file("."))
   )
 
 enablePlugins(ScalafmtPlugin)
+scalacOptions += "-Wconf:any:warning-verbose"
