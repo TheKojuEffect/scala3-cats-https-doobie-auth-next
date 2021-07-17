@@ -53,7 +53,7 @@ export default function SignInDialog({open, onClose}: SignInDialogProps) {
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const {refreshAuth} = useAuth();
 
-    const {register, handleSubmit, control, errors} = useForm<SignInRequest>();
+    const {register, handleSubmit, errors} = useForm<SignInRequest>();
     const onSubmit = (data: SignInRequest) => {
         fetch('/login', {
                 method: 'POST',

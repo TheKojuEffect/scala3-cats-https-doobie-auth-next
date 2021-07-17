@@ -6,14 +6,7 @@ type Auth = {
     refreshAuth: () => void
 }
 
-const defaultAuth: Auth = {
-    loading: false,
-    authenticated: false,
-    refreshAuth: () => {
-    }
-};
-
-const AuthContext = React.createContext<Auth>(undefined as any);
+const AuthContext = React.createContext<Auth | undefined>(undefined);
 
 export const AuthProvider: FC = ({children}) => {
     const [loading, setLoading] = useState(false);
@@ -30,9 +23,7 @@ export const AuthProvider: FC = ({children}) => {
             });
     }
 
-    useEffect(() => {
-        refreshAuth();
-    }, []);
+    useEffect(refreshAuth, []);
 
     return (
         <AuthContext.Provider value={{loading, authenticated, refreshAuth}}>
