@@ -18,5 +18,5 @@ export default function SignInButton() {
             <Button color="inherit" onClick={openSignInModal}>Sign In</Button>
             <SignInDialog open={signInModalOpen} onClose={handleSignInModalClose}/>
         </>
-    )
+    );
 }

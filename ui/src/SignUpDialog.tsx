@@ -12,6 +12,7 @@ import {Close} from '@material-ui/icons';
 import {Controller, useForm} from 'react-hook-form';
 import StateSelect from './StateSelect';
 import {StateCode} from './State';
+import {useAuth} from "./auth/Auth";
 
 const useStyles = makeStyles((theme: Theme) => ({
     paper: {
@@ -55,6 +56,7 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
     const classes = useStyles();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const {refreshAuth} = useAuth();
 
     const {register, handleSubmit, control, errors} = useForm<SignUpRequest>();
     const onSubmit = (data: SignUpRequest) => {
@@ -65,7 +67,9 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
                 },
                 body: JSON.stringify(data),
             }
-        ).then(onClose)
+        )
+            .then(onClose)
+            .then(refreshAuth);
     }
 
     return (

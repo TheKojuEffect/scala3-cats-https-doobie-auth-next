@@ -19,13 +19,14 @@ object NormalUserRoutes {
       authHandler: AuthHandler[F],
   ): HttpRoutes[F] = Router(
     "normal-users" -> (
-      signUp(userService) <+>
+      signUp(userService, authHandler) <+>
         update(userService, authHandler)
     ),
   )
 
   def signUp[F[_]: Sync](
       userService: UserService[F],
+      authHandler: AuthHandler[F],
   ): HttpRoutes[F] = {
     implicit val signUpRequestDecoder: EntityDecoder[F, SignUpRequest] = jsonOf
     val dsl = Http4sDsl[F]
@@ -35,8 +36,9 @@ object NormalUserRoutes {
       for {
         signUpRequest <- req.as[SignUpRequest]
         normalUser <- userService.signUp(signUpRequest)
-        result <- Created(normalUser.id.asJson)
-      } yield result
+        token <- authHandler.authenticator.create(normalUser.id)
+        response <- Created(normalUser.id.asJson).map(authHandler.authenticator.embed(_, token))
+      } yield response
     }
   }
 
