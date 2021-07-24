@@ -1,6 +1,6 @@
 import {Button} from "@material-ui/core";
 import React from "react";
-import {useAuth} from "./auth/Auth";
+import {useAuth} from "../auth/Auth";
 
 export default function SignOutButton() {
     const {refreshAuth} = useAuth();

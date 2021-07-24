@@ -1,7 +1,6 @@
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
@@ -12,7 +11,7 @@ import {Close} from '@material-ui/icons';
 import {Controller, useForm} from 'react-hook-form';
 import StateSelect from './StateSelect';
 import {StateCode} from './State';
-import {useAuth} from "./auth/Auth";
+import {useAuth} from "../auth/Auth";
 
 const useStyles = makeStyles((theme: Theme) => ({
     paper: {

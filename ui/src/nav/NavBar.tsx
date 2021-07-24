@@ -12,7 +12,7 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import {PeopleOutline} from "@material-ui/icons";
 import SignUpButton from "./SignUpButton";
 import SignInButton from "./SignInButton";
-import {useAuth} from "./auth/Auth";
+import {useAuth} from "../auth/Auth";
 import SignOutButton from "./SignOutButton";
 
 const useStyles = makeStyles((theme: Theme) => ({
