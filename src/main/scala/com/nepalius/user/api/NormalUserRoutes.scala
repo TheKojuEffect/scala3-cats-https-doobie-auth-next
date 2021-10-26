@@ -1,6 +1,6 @@
 package com.nepalius.user.api
 
-import cats.effect.Sync
+import cats.effect.{Concurrent, Sync}
 import cats.implicits._
 import com.nepalius.auth.Auth.AuthHandler
 import com.nepalius.user.domain.{SignUpRequest, UserProfile, UserService}
@@ -14,7 +14,7 @@ import tsec.authentication.{TSecAuthService, _}
 
 object NormalUserRoutes {
 
-  def routes[F[_]: Sync](
+  def routes[F[_]: Concurrent](
       userService: UserService[F],
       authHandler: AuthHandler[F],
   ): HttpRoutes[F] = Router(
@@ -24,7 +24,7 @@ object NormalUserRoutes {
     ),
   )
 
-  def signUp[F[_]: Sync](
+  def signUp[F[_]: Concurrent](
       userService: UserService[F],
       authHandler: AuthHandler[F],
   ): HttpRoutes[F] = {
@@ -42,7 +42,7 @@ object NormalUserRoutes {
     }
   }
 
-  def update[F[_]: Sync](
+  def update[F[_]: Concurrent](
       userService: UserService[F],
       authHandler: AuthHandler[F],
   ): HttpRoutes[F] = {

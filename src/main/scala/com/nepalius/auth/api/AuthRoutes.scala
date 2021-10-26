@@ -2,7 +2,7 @@ package com.nepalius.auth.api
 
 import cats.Monad
 import cats.data.OptionT
-import cats.effect.Sync
+import cats.effect.{Concurrent, Sync}
 import cats.implicits._
 import com.nepalius.auth.Auth.AuthHandler
 import com.nepalius.user.domain.UserService
@@ -18,7 +18,7 @@ import tsec.passwordhashers.{PasswordHash, PasswordHasher}
 
 object AuthRoutes {
 
-  def routes[F[_]: Sync, A](
+  def routes[F[_]: Concurrent, A](
       userService: UserService[F],
       passwordHasher: PasswordHasher[F, A],
       authHandler: AuthHandler[F],
@@ -28,7 +28,7 @@ object AuthRoutes {
     "current-user" -> currentUser(authHandler),
   )
 
-  def logIn[F[_]: Sync, A](
+  def logIn[F[_]: Concurrent, A](
       userService: UserService[F],
       passwordHasher: PasswordHasher[F, A],
       authHandler: AuthHandler[F],

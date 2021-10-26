@@ -1,4 +1,5 @@
-package com.nepalius.user.domain
+package com.nepalius.location.domain
+
 import enumeratum._
 
 import scala.annotation.nowarn

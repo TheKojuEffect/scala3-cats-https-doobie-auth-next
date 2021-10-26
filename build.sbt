@@ -1,12 +1,12 @@
-val Http4sVersion = "0.21.24"
+val Http4sVersion = "0.23.6"
 val CirceVersion = "0.14.1"
 val CirceConfigVersion = "0.8.0"
-val LogbackVersion = "1.2.3"
-val DoobieVersion = "0.13.4"
-val PostgresVersion = "42.2.23"
-val FlywayVersion = "7.11.2"
+val LogbackVersion = "1.2.6"
+val DoobieVersion = "1.0.0-RC1"
+val PostgresVersion = "42.2.24"
+val FlywayVersion = "8.0.1"
 val ScalaTagsVersion = "0.9.4"
-val TSecVersion = "0.2.1"
+val TSecVersion = "0.4.0"
 val EnumeratumVersion = "1.7.0"
 
 lazy val root = (project in file("."))
@@ -36,7 +36,7 @@ lazy val root = (project in file("."))
       "com.beachape" %% "enumeratum-doobie" % EnumeratumVersion,
       "com.beachape" %% "enumeratum-circe" % EnumeratumVersion,
     ),
-    addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.13.0" cross CrossVersion.full),
+    addCompilerPlugin("org.typelevel" %% "kind-projector" % "0.13.2" cross CrossVersion.full),
     addCompilerPlugin("com.olegpy" %% "better-monadic-for" % "0.3.1"),
   )
 

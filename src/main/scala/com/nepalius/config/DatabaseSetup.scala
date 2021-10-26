@@ -1,6 +1,6 @@
 package com.nepalius.config
 
-import cats.effect.{Async, Blocker, ContextShift, Resource, Sync}
+import cats.effect.{Async, Resource, Sync}
 import cats.syntax.functor._
 import doobie.Transactor
 import doobie.hikari.HikariTransactor
@@ -9,7 +9,7 @@ import org.flywaydb.core.Flyway
 
 object DatabaseSetup {
 
-  def dbTransactor[F[_]: Async: ContextShift](
+  def dbTransactor[F[_]: Async](
       dbConfig: DatabaseConfig,
   ): Resource[F, Transactor[F]] =
     for {
@@ -21,7 +21,6 @@ object DatabaseSetup {
         dbConfig.user,
         dbConfig.password,
         connectionContext,
-        Blocker.liftExecutionContext(transactionContext),
       )
     } yield transactor
 

@@ -1,7 +1,7 @@
 package com.nepalius.user.repo
 
 import cats.data.OptionT
-import cats.effect.Bracket
+import cats.effect.MonadCancel
 import cats.implicits._
 import com.nepalius.user.domain.User.UserId
 import com.nepalius.user.domain.{NormalUser, User, UserProfile, UserRepo}
@@ -11,7 +11,7 @@ import doobie.util.query.Query0
 import doobie.{Transactor, Update0}
 import tsec.authentication.IdentityStore
 
-class UserRepository[F[_]: Bracket[*[_], Throwable]](val transactor: Transactor[F])
+class UserRepository[F[_]: MonadCancel[*[_], Throwable]](val transactor: Transactor[F])
     extends UserRepo[F]
     with IdentityStore[F, UserId, User] {
 
@@ -37,7 +37,7 @@ class UserRepository[F[_]: Bracket[*[_], Throwable]](val transactor: Transactor[
 }
 
 object UserRepository {
-  def apply[F[_]: Bracket[*[_], Throwable]](transactor: Transactor[F]): UserRepository[F] =
+  def apply[F[_]: MonadCancel[*[_], Throwable]](transactor: Transactor[F]): UserRepository[F] =
     new UserRepository[F](transactor)
 }
 
