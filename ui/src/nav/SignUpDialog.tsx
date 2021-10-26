@@ -57,7 +57,7 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const {refreshAuth} = useAuth();
 
-    const {register, handleSubmit, control, errors} = useForm<SignUpRequest>();
+    const {register, handleSubmit, control, formState: {errors}} = useForm<SignUpRequest>();
     const onSubmit = (data: SignUpRequest) => {
         fetch('/normal-users', {
                 method: 'POST',
@@ -96,15 +96,12 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
                                 <Grid item xs={12} sm={6}>
                                     <TextField
                                         autoComplete="given-name"
-                                        name="firstName"
                                         variant="outlined"
                                         required
                                         fullWidth
                                         label="First Name"
                                         autoFocus
-                                        inputRef={register({
-                                            required: true
-                                        })}
+                                        {...register('firstName', {required: true})}
                                         error={!!errors.firstName}
                                     />
                                 </Grid>
@@ -114,11 +111,8 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
                                         required
                                         fullWidth
                                         label="Last Name"
-                                        name="lastName"
                                         autoComplete="family-name"
-                                        inputRef={register({
-                                            required: true
-                                        })}
+                                        {...register('lastName', {required: true})}
                                         error={!!errors.lastName}
                                     />
                                 </Grid>
@@ -127,14 +121,14 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
                                         name="state"
                                         control={control}
                                         rules={{required: true}}
-                                        defaultValue={null}
+                                        defaultValue={undefined}
                                         render={
-                                            ({onChange}) => (
+                                            ({field: {onChange}}) =>
                                                 <StateSelect
                                                     error={!!errors.state}
                                                     onChange={(state) => {
                                                         onChange(state?.code)
-                                                    }}/>)
+                                                    }}/>
                                         }
                                     />
                                 </Grid>
@@ -144,11 +138,8 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
                                         required
                                         fullWidth
                                         label="Zip Code"
-                                        name="zipCode"
                                         autoComplete="postal_code"
-                                        inputRef={register({
-                                            required: true
-                                        })}
+                                        {...register('zipCode', {required: true})}
                                         error={!!errors.zipCode}
                                     />
                                 </Grid>
@@ -158,11 +149,8 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
                                         required
                                         fullWidth
                                         label="Email Address"
-                                        name="email"
                                         autoComplete="email"
-                                        inputRef={register({
-                                            required: true
-                                        })}
+                                        {...register('email', {required: true})}
                                         error={!!errors.email}
                                     />
                                 </Grid>
@@ -171,13 +159,10 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
                                         variant="outlined"
                                         required
                                         fullWidth
-                                        name="password"
                                         label="Password"
                                         type="password"
                                         autoComplete="new-password"
-                                        inputRef={register({
-                                            required: true
-                                        })}
+                                        {...register('password', {required: true})}
                                         error={!!errors.password}
                                     />
                                 </Grid>

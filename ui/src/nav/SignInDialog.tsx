@@ -51,7 +51,7 @@ export default function SignInDialog({open, onClose}: SignInDialogProps) {
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const {refreshAuth} = useAuth();
 
-    const {register, handleSubmit, errors} = useForm<SignInRequest>();
+    const {register, handleSubmit, formState: {errors}} = useForm<SignInRequest>();
     const onSubmit = (data: SignInRequest) => {
         fetch('/login', {
                 method: 'POST',
@@ -93,12 +93,9 @@ export default function SignInDialog({open, onClose}: SignInDialogProps) {
                                 fullWidth
                                 id="email"
                                 label="Email Address"
-                                name="email"
                                 autoComplete="email"
                                 autoFocus
-                                inputRef={register({
-                                    required: true
-                                })}
+                                {...register('email', {required: true})}
                                 error={!!errors.email}
                             />
                             <TextField
@@ -106,14 +103,11 @@ export default function SignInDialog({open, onClose}: SignInDialogProps) {
                                 margin="normal"
                                 required
                                 fullWidth
-                                name="password"
                                 label="Password"
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
-                                inputRef={register({
-                                    required: true
-                                })}
+                                {...register('password', {required: true})}
                                 error={!!errors.password}
                             />
                             <Button
