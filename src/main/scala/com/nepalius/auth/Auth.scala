@@ -4,7 +4,13 @@ import cats.effect.Sync
 import cats.implicits._
 import com.nepalius.user.domain.User
 import User.UserId
-import tsec.authentication.{AuthEncryptedCookie, EncryptedCookieAuthenticator, IdentityStore, SecuredRequestHandler, TSecCookieSettings}
+import tsec.authentication.{
+  AuthEncryptedCookie,
+  EncryptedCookieAuthenticator,
+  IdentityStore,
+  SecuredRequestHandler,
+  TSecCookieSettings,
+}
 import tsec.cipher.symmetric.IvGen
 import tsec.cipher.symmetric.jca.{AES128GCM, JAuthEncryptor}
 
