@@ -1,6 +1,6 @@
 package com.nepalius.post.repo
 
-import cats.effect.MonadCancel
+import cats.effect.MonadCancelThrow
 import cats.implicits._
 import com.nepalius.post.domain.{Post, PostRepo}
 import com.nepalius.post.repo.PostSql.insert
@@ -8,13 +8,13 @@ import doobie.implicits._
 import doobie.postgres.implicits._
 import doobie.{Transactor, Update0}
 
-class PostRepoImpl[F[_]: MonadCancel[*[_], Throwable]](val transactor: Transactor[F]) extends PostRepo[F] {
+class PostRepoImpl[F[_]: MonadCancelThrow](val transactor: Transactor[F]) extends PostRepo[F] {
   override def create(post: Post): F[Post] =
     insert(post).run.transact(transactor).as(post)
 }
 
 object PostRepoImpl {
-  def apply[F[_]: MonadCancel[*[_], Throwable]](transactor: Transactor[F]): PostRepoImpl[F] =
+  def apply[F[_]: MonadCancelThrow](transactor: Transactor[F]): PostRepoImpl[F] =
     new PostRepoImpl[F](transactor)
 }
 
