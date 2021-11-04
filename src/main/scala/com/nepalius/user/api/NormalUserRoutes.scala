@@ -1,6 +1,6 @@
 package com.nepalius.user.api
 
-import cats.effect.{Concurrent, Sync}
+import cats.effect.Concurrent
 import cats.implicits._
 import com.nepalius.auth.Auth.AuthHandler
 import com.nepalius.user.domain.{SignUpRequest, UserProfile, UserService}

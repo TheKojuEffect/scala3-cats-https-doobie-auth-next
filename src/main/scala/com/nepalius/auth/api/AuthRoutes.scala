@@ -2,7 +2,7 @@ package com.nepalius.auth.api
 
 import cats.Monad
 import cats.data.OptionT
-import cats.effect.{Concurrent, Sync}
+import cats.effect.Concurrent
 import cats.implicits._
 import com.nepalius.auth.Auth.AuthHandler
 import com.nepalius.user.domain.UserService

@@ -7,9 +7,11 @@ import com.nepalius.auth.Auth
 import com.nepalius.auth.api.AuthRoutes
 import com.nepalius.config.{AppConfig, DatabaseSetup}
 import com.nepalius.post.api.PostRoutes
+import com.nepalius.post.domain.PostService
+import com.nepalius.post.repo.PostRepoImpl
 import com.nepalius.user.api.NormalUserRoutes
 import com.nepalius.user.domain.UserService
-import com.nepalius.user.repo.UserRepository
+import com.nepalius.user.repo.UserRepoImpl
 import com.nepalius.view.ViewRoutes
 import io.circe.config.parser
 import org.http4s.blaze.server.BlazeServerBuilder
@@ -22,15 +24,17 @@ object Server {
     for {
       conf <- Resource.eval(parser.decodePathF[F, AppConfig]("nepalius"))
       transactor <- DatabaseSetup.dbTransactor(conf.db)
-      userRepo = UserRepository[F](transactor)
+      userRepo = UserRepoImpl(transactor)
+      postRepo = PostRepoImpl(transactor)
       passwordHasher = BCrypt.syncPasswordHasher[F]
       userService = UserService(userRepo, passwordHasher)
       authHandler = Auth.authHandler(userRepo)
+      postService = PostService(postRepo)
       httpApp = (
         ViewRoutes.index <+>
           AuthRoutes.routes(userService, passwordHasher, authHandler) <+>
           NormalUserRoutes.routes(userService, authHandler) <+>
-          PostRoutes.routes(authHandler)
+          PostRoutes.routes(authHandler, postService)
       ).orNotFound
       _ <- Resource.eval(DatabaseSetup.initDb(conf.db))
       server <- BlazeServerBuilder[F]

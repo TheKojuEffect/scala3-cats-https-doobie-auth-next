@@ -4,7 +4,7 @@ import com.nepalius.location.domain.State
 import com.nepalius.post.domain.Post.PostId
 import com.nepalius.user.domain.User.UserId
 
-import java.time.ZonedDateTime
+import java.time.LocalDateTime
 import java.util.UUID
 
 case class Post(
@@ -13,7 +13,7 @@ case class Post(
     targetState: State,
     targetZipCode: String,
     createdBy: UserId,
-    createdDateTime: ZonedDateTime,
+    createdAt: LocalDateTime,
 )
 
 object Post {

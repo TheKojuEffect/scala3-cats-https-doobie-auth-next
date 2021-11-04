@@ -1,6 +1,6 @@
-NepaliUS
+Local Expats
 ==============
-Connect with Nepali communities in US
+Connect with local communities in the US
 
 
 ## Getting Started

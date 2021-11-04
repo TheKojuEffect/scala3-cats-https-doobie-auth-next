@@ -11,7 +11,7 @@ import doobie.util.query.Query0
 import doobie.{Transactor, Update0}
 import tsec.authentication.IdentityStore
 
-class UserRepository[F[_]: MonadCancel[*[_], Throwable]](val transactor: Transactor[F])
+class UserRepoImpl[F[_]: MonadCancel[*[_], Throwable]](val transactor: Transactor[F])
     extends UserRepo[F]
     with IdentityStore[F, UserId, User] {
 
@@ -36,9 +36,9 @@ class UserRepository[F[_]: MonadCancel[*[_], Throwable]](val transactor: Transac
       .as(profile)
 }
 
-object UserRepository {
-  def apply[F[_]: MonadCancel[*[_], Throwable]](transactor: Transactor[F]): UserRepository[F] =
-    new UserRepository[F](transactor)
+object UserRepoImpl {
+  def apply[F[_]: MonadCancel[*[_], Throwable]](transactor: Transactor[F]): UserRepoImpl[F] =
+    new UserRepoImpl[F](transactor)
 }
 
 private object UserSql {

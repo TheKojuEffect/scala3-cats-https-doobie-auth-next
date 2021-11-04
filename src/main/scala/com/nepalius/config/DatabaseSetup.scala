@@ -14,7 +14,6 @@ object DatabaseSetup {
   ): Resource[F, Transactor[F]] =
     for {
       connectionContext <- ExecutionContexts.fixedThreadPool[F](dbConfig.connections.poolSize)
-      transactionContext <- ExecutionContexts.cachedThreadPool[F]
       transactor <- HikariTransactor.newHikariTransactor(
         dbConfig.driver,
         dbConfig.url,
