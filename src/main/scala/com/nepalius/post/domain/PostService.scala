@@ -1,6 +1,5 @@
 package com.nepalius.post.domain
 
-import com.nepalius.location.domain.State
 import com.nepalius.post.api.PostRequest
 import com.nepalius.user.domain.User
 
@@ -14,6 +13,8 @@ trait PostService[F[_]] {
 object PostService {
   def apply[F[_]](postRepo: PostRepo[F]): PostService[F] = new PostService[F] {
     override def create(post: PostRequest, user: User): F[Post] =
-      postRepo.create(Post(UUID.randomUUID(), post.message, State.VA, "3232", user.id, LocalDateTime.now()))
+      postRepo.create(
+        Post(UUID.randomUUID(), post.message, post.targetState, post.targetZipCode, user.id, LocalDateTime.now()),
+      )
   }
 }

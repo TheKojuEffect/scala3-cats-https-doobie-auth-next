@@ -1,3 +1,9 @@
 package com.nepalius.post.api
 
-case class PostRequest(message: String)
+import com.nepalius.location.domain.State
+
+case class PostRequest(
+    message: String,
+    targetState: State,
+    targetZipCode: String,
+)
