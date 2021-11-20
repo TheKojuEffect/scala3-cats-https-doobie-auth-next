@@ -16,6 +16,7 @@ import com.nepalius.view.ViewRoutes
 import io.circe.config.parser
 import org.http4s.blaze.server.BlazeServerBuilder
 import org.http4s.implicits._
+import io.circe.generic.auto._
 import org.http4s.server.{Server => HttpServer}
 import tsec.passwordhashers.jca.BCrypt
 
