@@ -50,7 +50,7 @@ object NormalUserRoutes:
     import dsl.*
 
     authHandler.liftService(
-      TSecAuthService { case req @ PUT -> Root / UUIDVar(id) asAuthed user =>
+      TSecAuthService { case req @ PUT -> Root / UUIDVar(id) `asAuthed` user =>
         if user.id === id then
           for
             profile <- req.request.as[UserProfile]

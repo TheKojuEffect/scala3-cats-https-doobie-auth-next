@@ -31,7 +31,7 @@ object PostRoutes:
     import dsl.*
 
     authHandler.liftService(
-      TSecAuthService { case req @ POST -> Root asAuthed user =>
+      TSecAuthService { case req @ POST -> Root `asAuthed` user =>
         for
           postRequest <- req.request.as[PostRequest]
           post <- postService.create(postRequest, user)

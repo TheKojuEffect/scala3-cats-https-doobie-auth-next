@@ -33,4 +33,6 @@ lazy val root = (project in file("."))
   )
 
 enablePlugins(ScalafmtPlugin)
-scalacOptions ++= Seq("-indent", "-rewrite")
+scalacOptions ++= Seq(
+  "-source:future",
+)

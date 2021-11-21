@@ -63,7 +63,7 @@ object AuthRoutes:
     val dsl = Http4sDsl[F]
     import dsl.*
     authHandler.liftService(
-      TSecAuthService { case req @ POST -> Root asAuthed _ =>
+      TSecAuthService { case req @ POST -> Root `asAuthed` _ =>
         Response[F]().removeCookie(req.authenticator.toCookie.copy(content = "")).pure[F]
       },
     )
@@ -75,7 +75,7 @@ object AuthRoutes:
     import dsl.*
 
     authHandler.liftService(
-      TSecAuthService { case GET -> Root asAuthed user =>
+      TSecAuthService { case GET -> Root `asAuthed` user =>
         Ok(user.asJson)
       },
     )
