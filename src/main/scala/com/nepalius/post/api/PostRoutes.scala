@@ -11,7 +11,7 @@ import org.http4s.server.Router
 import org.http4s.{EntityDecoder, EntityEncoder, HttpRoutes}
 import tsec.authentication.{TSecAuthService, asAuthed}
 
-object PostRoutes {
+object PostRoutes:
 
   def routes[F[_]: Concurrent](
       authHandler: AuthHandler[F],
@@ -23,7 +23,7 @@ object PostRoutes {
   def create[F[_]: Concurrent](
       authHandler: AuthHandler[F],
       postService: PostService[F],
-  ): HttpRoutes[F] = {
+  ): HttpRoutes[F] =
     implicit val postRequestDecoder: EntityDecoder[F, PostRequest] = jsonOf
     implicit val postEncoder: EntityEncoder[F, Post] = jsonEncoderOf
 
@@ -39,5 +39,3 @@ object PostRoutes {
         yield resp
       },
     )
-  }
-}

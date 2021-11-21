@@ -12,28 +12,25 @@ case class User(
     password: String,
     role: Role,
 )
-object User {
+object User:
   type UserId = UUID
 
   implicit def authRole[F[_]](implicit F: Applicative[F]): AuthorizationInfo[F, Role, User] =
     (u: User) => F.pure(u.role)
 
   implicit val userEncoder: Encoder[User] = Encoder.forProduct3("id", "email", "role")(u => (u.id, u.email, u.role))
-}
 
 final case class NormalUser(
     id: UUID,
     email: String,
     password: String,
     profile: UserProfile,
-) {
+):
   def role: Role = Role.Normal
-}
 
 final case class AdminUser(
     id: UUID,
     email: String,
     password: String,
-) {
+):
   def role: Role = Role.Admin
-}

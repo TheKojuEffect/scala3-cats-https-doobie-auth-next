@@ -3,7 +3,7 @@ package com.nepalius.user.domain
 import cats.data.OptionT
 import User.UserId
 
-trait UserRepo[F[_]] {
+trait UserRepo[F[_]]:
 
   def create(user: NormalUser): F[NormalUser]
 
@@ -12,4 +12,3 @@ trait UserRepo[F[_]] {
   def getUser(id: UserId): OptionT[F, User]
 
   def updateUserProfile(userId: UserId, profile: UserProfile): F[UserProfile]
-}

@@ -13,7 +13,7 @@ import tsec.authentication.IdentityStore
 
 class UserRepoImpl[F[_]: MonadCancelThrow](val transactor: Transactor[F])
     extends UserRepo[F]
-    with IdentityStore[F, UserId, User] {
+    with IdentityStore[F, UserId, User]:
 
   import UserSql._
 
@@ -34,14 +34,12 @@ class UserRepoImpl[F[_]: MonadCancelThrow](val transactor: Transactor[F])
     updateProfile(userId, profile).run
       .transact(transactor)
       .as(profile)
-}
 
-object UserRepoImpl {
+object UserRepoImpl:
   def apply[F[_]: MonadCancelThrow](transactor: Transactor[F]): UserRepoImpl[F] =
     new UserRepoImpl[F](transactor)
-}
 
-private object UserSql {
+private object UserSql:
 
   def getById(id: UserId): Query0[User] =
     sql"""
@@ -75,4 +73,3 @@ private object UserSql {
           state = ${profile.state}
         WHERE user_id = $userId
        """.update
-}

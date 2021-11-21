@@ -12,7 +12,7 @@ import org.http4s.server.Router
 import org.http4s.{EntityDecoder, HttpRoutes}
 import tsec.authentication.{TSecAuthService, _}
 
-object NormalUserRoutes {
+object NormalUserRoutes:
 
   def routes[F[_]: Concurrent](
       userService: UserService[F],
@@ -27,7 +27,7 @@ object NormalUserRoutes {
   def signUp[F[_]: Concurrent](
       userService: UserService[F],
       authHandler: AuthHandler[F],
-  ): HttpRoutes[F] = {
+  ): HttpRoutes[F] =
     implicit val signUpRequestDecoder: EntityDecoder[F, SignUpRequest] = jsonOf
     val dsl = Http4sDsl[F]
     import dsl._
@@ -40,12 +40,11 @@ object NormalUserRoutes {
         response <- Created(normalUser.id.asJson).map(authHandler.authenticator.embed(_, token))
       yield response
     }
-  }
 
   def update[F[_]: Concurrent](
       userService: UserService[F],
       authHandler: AuthHandler[F],
-  ): HttpRoutes[F] = {
+  ): HttpRoutes[F] =
     implicit val userProfileDecoder: EntityDecoder[F, UserProfile] = jsonOf
     val dsl = Http4sDsl[F]
     import dsl._
@@ -62,5 +61,3 @@ object NormalUserRoutes {
           NotFound()
       },
     )
-  }
-}

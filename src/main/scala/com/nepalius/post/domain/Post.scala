@@ -16,6 +16,5 @@ case class Post(
     createdAt: LocalDateTime,
 )
 
-object Post {
+object Post:
   type PostId = UUID
-}

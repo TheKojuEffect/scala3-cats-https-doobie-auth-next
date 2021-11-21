@@ -6,13 +6,12 @@ import cats.implicits._
 import User.UserId
 import tsec.passwordhashers.PasswordHasher
 
-trait UserService[F[_]] {
+trait UserService[F[_]]:
   def getUserByEmail(email: String): OptionT[F, User]
   def signUp(request: SignUpRequest): F[NormalUser]
   def updateUserProfile(userId: UserId, profile: UserProfile): F[UserProfile]
-}
 
-object UserService {
+object UserService:
 
   def apply[F[_]: FlatMap, A](
       userRepo: UserRepo[F],
@@ -31,4 +30,3 @@ object UserService {
     override def updateUserProfile(userId: UserId, profile: UserProfile): F[UserProfile] =
       userRepo.updateUserProfile(userId, profile)
   }
-}

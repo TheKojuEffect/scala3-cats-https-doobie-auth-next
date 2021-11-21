@@ -7,7 +7,7 @@ import doobie.hikari.HikariTransactor
 import doobie.util.ExecutionContexts
 import org.flywaydb.core.Flyway
 
-object DatabaseSetup {
+object DatabaseSetup:
 
   def dbTransactor[F[_]: Async](
       dbConfig: DatabaseConfig,
@@ -33,4 +33,3 @@ object DatabaseSetup {
           .migrate()
       }
       .as(())
-}

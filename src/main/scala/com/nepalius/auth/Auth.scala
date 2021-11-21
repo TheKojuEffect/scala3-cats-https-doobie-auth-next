@@ -11,7 +11,7 @@ import tsec.cipher.symmetric.jca.{AES128GCM, JAuthEncryptor}
 
 import scala.concurrent.duration.DurationInt
 
-object Auth {
+object Auth:
 
   type AuthHandler[F[_]] = SecuredRequestHandler[F, UserId, User, AuthEncryptedCookie[AES128GCM, UserId]]
 //
@@ -43,4 +43,3 @@ object Auth {
       identityStore: IdentityStore[F, UserId, User],
   ): AuthHandler[F] = ???
 
-}

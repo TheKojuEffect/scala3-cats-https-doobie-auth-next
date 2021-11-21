@@ -16,7 +16,7 @@ import tsec.authentication.{TSecAuthService, asAuthed}
 import tsec.common.Verified
 import tsec.passwordhashers.{PasswordHash, PasswordHasher}
 
-object AuthRoutes {
+object AuthRoutes:
 
   def routes[F[_]: Concurrent, A](
       userService: UserService[F],
@@ -32,7 +32,7 @@ object AuthRoutes {
       userService: UserService[F],
       passwordHasher: PasswordHasher[F, A],
       authHandler: AuthHandler[F],
-  ): HttpRoutes[F] = {
+  ): HttpRoutes[F] =
     implicit val logInRequestDecoder: EntityDecoder[F, LogInRequest] = jsonOf
     val dsl = Http4sDsl[F]
     import dsl._
@@ -58,9 +58,8 @@ object AuthRoutes {
           Forbidden("Invalid email or password.")
       }
     }
-  }
 
-  def logOut[F[_]: Monad](authHandler: AuthHandler[F]): HttpRoutes[F] = {
+  def logOut[F[_]: Monad](authHandler: AuthHandler[F]): HttpRoutes[F] =
     val dsl = Http4sDsl[F]
     import dsl._
     authHandler.liftService(
@@ -68,11 +67,10 @@ object AuthRoutes {
         Response[F]().removeCookie(req.authenticator.toCookie.copy(content = "")).pure[F]
       },
     )
-  }
 
   def currentUser[F[_]: Monad](
       authHandler: AuthHandler[F],
-  ): HttpRoutes[F] = {
+  ): HttpRoutes[F] =
     val dsl = Http4sDsl[F]
     import dsl._
 
@@ -81,5 +79,3 @@ object AuthRoutes {
         Ok(user.asJson)
       },
     )
-  }
-}

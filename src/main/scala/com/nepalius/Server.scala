@@ -18,7 +18,7 @@ import org.http4s.implicits._
 import org.http4s.server.{Server => HttpServer}
 import tsec.passwordhashers.jca.BCrypt
 
-object Server {
+object Server:
   def create[F[_]: Async]: Resource[F, HttpServer] =
     for
       conf <- Resource.pure(AppConfig.default)
@@ -41,4 +41,3 @@ object Server {
         .withHttpApp(httpApp)
         .resource
     yield server
-}
