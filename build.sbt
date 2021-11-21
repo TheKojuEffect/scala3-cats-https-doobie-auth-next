@@ -34,5 +34,6 @@ lazy val root = (project in file("."))
 
 enablePlugins(ScalafmtPlugin)
 scalacOptions ++= Seq(
+  "-new-syntax",
   "-source:future",
 )
