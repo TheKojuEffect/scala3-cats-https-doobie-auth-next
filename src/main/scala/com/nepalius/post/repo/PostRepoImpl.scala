@@ -1,11 +1,11 @@
 package com.nepalius.post.repo
 
 import cats.effect.MonadCancelThrow
-import cats.implicits._
+import cats.implicits.*
 import com.nepalius.post.domain.{Post, PostRepo}
 import com.nepalius.post.repo.PostSql.insert
-import doobie.implicits._
-import doobie.postgres.implicits._
+import doobie.implicits.*
+import doobie.postgres.implicits.*
 import doobie.{Transactor, Update0}
 
 class PostRepoImpl[F[_]: MonadCancelThrow](val transactor: Transactor[F]) extends PostRepo[F]:

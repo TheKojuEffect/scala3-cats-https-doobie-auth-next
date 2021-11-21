@@ -1,7 +1,7 @@
 package com.nepalius.config
 
 import cats.effect.{Async, Resource, Sync}
-import cats.syntax.functor._
+import cats.syntax.functor.*
 import doobie.Transactor
 import doobie.hikari.HikariTransactor
 import doobie.util.ExecutionContexts

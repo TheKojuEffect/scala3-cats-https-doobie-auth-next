@@ -8,7 +8,7 @@ object ViewRoutes:
 
   def index[F[_]: Sync]: HttpRoutes[F] =
     val dsl = new Http4sDsl[F] {}
-    import dsl._
+    import dsl.*
     HttpRoutes.of[F] { case GET -> Root =>
       Ok("NepaliUS")
     }

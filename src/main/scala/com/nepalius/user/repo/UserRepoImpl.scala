@@ -2,11 +2,11 @@ package com.nepalius.user.repo
 
 import cats.data.OptionT
 import cats.effect.MonadCancelThrow
-import cats.implicits._
+import cats.implicits.*
 import com.nepalius.user.domain.User.UserId
 import com.nepalius.user.domain.{NormalUser, User, UserProfile, UserRepo}
-import doobie.implicits._
-import doobie.postgres.implicits._
+import doobie.implicits.*
+import doobie.postgres.implicits.*
 import doobie.util.query.Query0
 import doobie.{Transactor, Update0}
 import tsec.authentication.IdentityStore
@@ -15,7 +15,7 @@ class UserRepoImpl[F[_]: MonadCancelThrow](val transactor: Transactor[F])
     extends UserRepo[F]
     with IdentityStore[F, UserId, User]:
 
-  import UserSql._
+  import UserSql.*
 
   override def get(id: UserId): OptionT[F, User] = getUser(id)
 

@@ -1,7 +1,7 @@
 package com.nepalius.user.domain
 
-import cats._
-import cats.implicits._
+import cats.*
+import cats.implicits.*
 
 import tsec.authorization.{AuthGroup, SimpleAuthEnum}
 

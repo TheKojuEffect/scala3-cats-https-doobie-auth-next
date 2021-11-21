@@ -2,7 +2,7 @@ package com.nepalius.user.domain
 
 import cats.FlatMap
 import cats.data.OptionT
-import cats.implicits._
+import cats.implicits.*
 import User.UserId
 import tsec.passwordhashers.PasswordHasher
 

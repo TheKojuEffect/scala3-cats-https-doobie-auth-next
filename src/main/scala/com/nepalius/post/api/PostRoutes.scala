@@ -1,10 +1,10 @@
 package com.nepalius.post.api
 
 import cats.effect.kernel.Concurrent
-import cats.implicits._
+import cats.implicits.*
 import com.nepalius.auth.Auth.AuthHandler
 import com.nepalius.post.domain.{Post, PostService}
-import io.circe.generic.auto._
+import io.circe.generic.auto.*
 import org.http4s.circe.{jsonEncoderOf, jsonOf}
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.Router
@@ -28,7 +28,7 @@ object PostRoutes:
     implicit val postEncoder: EntityEncoder[F, Post] = jsonEncoderOf
 
     val dsl = Http4sDsl[F]
-    import dsl._
+    import dsl.*
 
     authHandler.liftService(
       TSecAuthService { case req @ POST -> Root asAuthed user =>

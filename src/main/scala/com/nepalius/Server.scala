@@ -2,7 +2,7 @@ package com.nepalius
 
 import cats.effect.Resource
 import cats.effect.kernel.Async
-import cats.implicits._
+import cats.implicits.*
 import com.nepalius.auth.Auth
 import com.nepalius.auth.api.AuthRoutes
 import com.nepalius.config.{AppConfig, DatabaseSetup}
@@ -14,8 +14,8 @@ import com.nepalius.user.domain.UserService
 import com.nepalius.user.repo.UserRepoImpl
 import com.nepalius.view.ViewRoutes
 import org.http4s.blaze.server.BlazeServerBuilder
-import org.http4s.implicits._
-import org.http4s.server.{Server => HttpServer}
+import org.http4s.implicits.*
+import org.http4s.server.{Server as HttpServer}
 import tsec.passwordhashers.jca.BCrypt
 
 object Server:

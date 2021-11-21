@@ -1,16 +1,16 @@
 package com.nepalius.user.api
 
 import cats.effect.Concurrent
-import cats.implicits._
+import cats.implicits.*
 import com.nepalius.auth.Auth.AuthHandler
 import com.nepalius.user.domain.{SignUpRequest, UserProfile, UserService}
-import io.circe.generic.auto._
-import io.circe.syntax._
-import org.http4s.circe._
+import io.circe.generic.auto.*
+import io.circe.syntax.*
+import org.http4s.circe.*
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.Router
 import org.http4s.{EntityDecoder, HttpRoutes}
-import tsec.authentication.{TSecAuthService, _}
+import tsec.authentication.{TSecAuthService, *}
 
 object NormalUserRoutes:
 
@@ -30,7 +30,7 @@ object NormalUserRoutes:
   ): HttpRoutes[F] =
     implicit val signUpRequestDecoder: EntityDecoder[F, SignUpRequest] = jsonOf
     val dsl = Http4sDsl[F]
-    import dsl._
+    import dsl.*
 
     HttpRoutes.of[F] { case req @ POST -> Root =>
       for
@@ -47,7 +47,7 @@ object NormalUserRoutes:
   ): HttpRoutes[F] =
     implicit val userProfileDecoder: EntityDecoder[F, UserProfile] = jsonOf
     val dsl = Http4sDsl[F]
-    import dsl._
+    import dsl.*
 
     authHandler.liftService(
       TSecAuthService { case req @ PUT -> Root / UUIDVar(id) asAuthed user =>

@@ -1,10 +1,10 @@
 package com.nepalius.auth
 
 import cats.effect.Sync
-import cats.implicits._
+import cats.implicits.*
 import com.nepalius.user.domain.User
 import User.UserId
-import tsec.authentication._
+import tsec.authentication.*
 
 import tsec.cipher.symmetric.IvGen
 import tsec.cipher.symmetric.jca.{AES128GCM, JAuthEncryptor}

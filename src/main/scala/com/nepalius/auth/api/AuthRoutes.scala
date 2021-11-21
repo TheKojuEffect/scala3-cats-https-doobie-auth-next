@@ -3,12 +3,12 @@ package com.nepalius.auth.api
 import cats.Monad
 import cats.data.OptionT
 import cats.effect.Concurrent
-import cats.implicits._
+import cats.implicits.*
 import com.nepalius.auth.Auth.AuthHandler
 import com.nepalius.user.domain.UserService
-import io.circe.generic.auto._
-import io.circe.syntax._
-import org.http4s.circe.{jsonOf, _}
+import io.circe.generic.auto.*
+import io.circe.syntax.*
+import org.http4s.circe.{jsonOf, *}
 import org.http4s.dsl.Http4sDsl
 import org.http4s.server.Router
 import org.http4s.{EntityDecoder, HttpRoutes, Response}
@@ -35,7 +35,7 @@ object AuthRoutes:
   ): HttpRoutes[F] =
     implicit val logInRequestDecoder: EntityDecoder[F, LogInRequest] = jsonOf
     val dsl = Http4sDsl[F]
-    import dsl._
+    import dsl.*
 
     HttpRoutes.of[F] { case req @ POST -> Root =>
       val action = for
@@ -61,7 +61,7 @@ object AuthRoutes:
 
   def logOut[F[_]: Monad](authHandler: AuthHandler[F]): HttpRoutes[F] =
     val dsl = Http4sDsl[F]
-    import dsl._
+    import dsl.*
     authHandler.liftService(
       TSecAuthService { case req @ POST -> Root asAuthed _ =>
         Response[F]().removeCookie(req.authenticator.toCookie.copy(content = "")).pure[F]
@@ -72,7 +72,7 @@ object AuthRoutes:
       authHandler: AuthHandler[F],
   ): HttpRoutes[F] =
     val dsl = Http4sDsl[F]
-    import dsl._
+    import dsl.*
 
     authHandler.liftService(
       TSecAuthService { case GET -> Root asAuthed user =>
