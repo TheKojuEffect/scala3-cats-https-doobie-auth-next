@@ -22,11 +22,11 @@ object UserService {
     override def getUserByEmail(email: String): OptionT[F, User] = userRepo.getUserByEmail(email)
 
     override def signUp(request: SignUpRequest): F[NormalUser] =
-      for {
+      for
         passwordHash <- passwordHasher.hashpw(request.password)
         normalUser = request.asNormalUser(passwordHash)
         savedUser <- userRepo.create(normalUser)
-      } yield savedUser
+      yield savedUser
 
     override def updateUserProfile(userId: UserId, profile: UserProfile): F[UserProfile] =
       userRepo.updateUserProfile(userId, profile)

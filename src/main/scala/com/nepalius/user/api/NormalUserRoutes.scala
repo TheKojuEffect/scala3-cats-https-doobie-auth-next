@@ -33,12 +33,12 @@ object NormalUserRoutes {
     import dsl._
 
     HttpRoutes.of[F] { case req @ POST -> Root =>
-      for {
+      for
         signUpRequest <- req.as[SignUpRequest]
         normalUser <- userService.signUp(signUpRequest)
         token <- authHandler.authenticator.create(normalUser.id)
         response <- Created(normalUser.id.asJson).map(authHandler.authenticator.embed(_, token))
-      } yield response
+      yield response
     }
   }
 
@@ -52,12 +52,12 @@ object NormalUserRoutes {
 
     authHandler.liftService(
       TSecAuthService { case req @ PUT -> Root / UUIDVar(id) asAuthed user =>
-        if (user.id === id)
-          for {
+        if user.id === id then
+          for
             profile <- req.request.as[UserProfile]
             _ <- userService.updateUserProfile(id, profile)
             result <- Ok()
-          } yield result
+          yield result
         else
           NotFound()
       },

@@ -12,7 +12,7 @@ object DatabaseSetup {
   def dbTransactor[F[_]: Async](
       dbConfig: DatabaseConfig,
   ): Resource[F, Transactor[F]] =
-    for {
+    for
       connectionContext <- ExecutionContexts.fixedThreadPool[F](dbConfig.connections.poolSize)
       transactor <- HikariTransactor.newHikariTransactor(
         dbConfig.driver,
@@ -21,7 +21,7 @@ object DatabaseSetup {
         dbConfig.password,
         connectionContext,
       )
-    } yield transactor
+    yield transactor
 
   def initDb[F[_]: Sync](config: DatabaseConfig): F[Unit] =
     Sync[F]

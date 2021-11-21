@@ -38,7 +38,7 @@ object AuthRoutes {
     import dsl._
 
     HttpRoutes.of[F] { case req @ POST -> Root =>
-      val action = for {
+      val action = for
         logInRequest <- OptionT.liftF(req.as[LogInRequest])
         user <- userService.getUserByEmail(logInRequest.email)
         verificationStatus <- OptionT.liftF(
@@ -49,7 +49,7 @@ object AuthRoutes {
           case _        => None
         })
         token <- OptionT.liftF(authHandler.authenticator.create(user.id))
-      } yield (user, token)
+      yield (user, token)
 
       action.value.flatMap {
         case Some((user, token)) =>

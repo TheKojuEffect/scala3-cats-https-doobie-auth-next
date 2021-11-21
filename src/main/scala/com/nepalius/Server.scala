@@ -20,7 +20,7 @@ import tsec.passwordhashers.jca.BCrypt
 
 object Server {
   def create[F[_]: Async]: Resource[F, HttpServer] =
-    for {
+    for
       conf <- Resource.pure(AppConfig.default)
       transactor <- DatabaseSetup.dbTransactor(conf.db)
       userRepo = UserRepoImpl(transactor)
@@ -40,5 +40,5 @@ object Server {
         .bindHttp(conf.server.port, conf.server.host)
         .withHttpApp(httpApp)
         .resource
-    } yield server
+    yield server
 }

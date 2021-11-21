@@ -32,11 +32,11 @@ object PostRoutes {
 
     authHandler.liftService(
       TSecAuthService { case req @ POST -> Root asAuthed user =>
-        for {
+        for
           postRequest <- req.request.as[PostRequest]
           post <- postService.create(postRequest, user)
           resp <- Ok(post)
-        } yield resp
+        yield resp
       },
     )
   }
