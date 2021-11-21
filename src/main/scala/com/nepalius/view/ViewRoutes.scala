@@ -3,7 +3,6 @@ package com.nepalius.view
 import cats.effect.Sync
 import org.http4s.HttpRoutes
 import org.http4s.dsl.Http4sDsl
-import org.http4s.scalatags.scalatagsEncoder
 
 object ViewRoutes {
 
@@ -11,7 +10,7 @@ object ViewRoutes {
     val dsl = new Http4sDsl[F] {}
     import dsl._
     HttpRoutes.of[F] { case GET -> Root =>
-      Ok(RootPage.index)
+      Ok("NepaliUS")
     }
   }
 }

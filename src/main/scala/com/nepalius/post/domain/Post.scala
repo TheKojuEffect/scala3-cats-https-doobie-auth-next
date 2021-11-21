@@ -1,6 +1,6 @@
 package com.nepalius.post.domain
 
-import com.nepalius.location.domain.State
+
 import com.nepalius.post.domain.Post.PostId
 import com.nepalius.user.domain.User.UserId
 
@@ -10,7 +10,7 @@ import java.util.UUID
 case class Post(
     id: PostId,
     message: String,
-    targetState: State,
+    targetState: String,
     targetZipCode: String,
     createdBy: UserId,
     createdAt: LocalDateTime,
