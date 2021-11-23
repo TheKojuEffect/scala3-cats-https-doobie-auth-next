@@ -9,15 +9,11 @@ import doobie.implicits.*
 import doobie.postgres.implicits.*
 import doobie.util.query.Query0
 import doobie.{Transactor, Update0}
-import tsec.authentication.IdentityStore
 
 class UserRepoImpl[F[_]: MonadCancelThrow](val transactor: Transactor[F])
-    extends UserRepo[F]
-    with IdentityStore[F, UserId, User]:
+    extends UserRepo[F]:
 
   import UserSql.*
-
-  override def get(id: UserId): OptionT[F, User] = getUser(id)
 
   override def getUser(id: UserId): OptionT[F, User] =
     OptionT(getById(id).option.transact(transactor))

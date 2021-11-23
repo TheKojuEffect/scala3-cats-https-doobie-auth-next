@@ -5,7 +5,7 @@ import cats.data.OptionT
 import cats.effect.Concurrent
 import cats.implicits.*
 import com.nepalius.auth.Auth.AuthHandler
-import com.nepalius.user.domain.UserService
+import com.nepalius.user.domain.{User, UserService}
 import io.circe.generic.auto.*
 import io.circe.syntax.*
 import org.http4s.circe.{jsonOf, *}
@@ -15,6 +15,7 @@ import org.http4s.{EntityDecoder, HttpRoutes, Response}
 import tsec.authentication.{TSecAuthService, asAuthed}
 import tsec.common.Verified
 import tsec.passwordhashers.{PasswordHash, PasswordHasher}
+import io.circe.Encoder
 
 object AuthRoutes:
 
@@ -73,6 +74,8 @@ object AuthRoutes:
   ): HttpRoutes[F] =
     val dsl = Http4sDsl[F]
     import dsl.*
+
+    implicit val userEncoder: Encoder[User] = Encoder.forProduct3("id", "email", "role")(u => (u.id, u.email, u.role.role))
 
     authHandler.liftService(
       TSecAuthService { case GET -> Root `asAuthed` user =>

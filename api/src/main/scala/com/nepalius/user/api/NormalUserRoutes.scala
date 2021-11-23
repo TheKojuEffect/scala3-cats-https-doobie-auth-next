@@ -11,22 +11,25 @@ import org.http4s.dsl.Http4sDsl
 import org.http4s.server.Router
 import org.http4s.{EntityDecoder, HttpRoutes}
 import tsec.authentication.{TSecAuthService, *}
+import tsec.passwordhashers.PasswordHasher
 
 object NormalUserRoutes:
 
-  def routes[F[_]: Concurrent](
+  def routes[F[_]: Concurrent, A](
       userService: UserService[F],
       authHandler: AuthHandler[F],
+      passwordHasher: PasswordHasher[F, A],
   ): HttpRoutes[F] = Router(
     "normal-users" -> (
-      signUp(userService, authHandler) <+>
+      signUp(userService, authHandler, passwordHasher) <+>
         update(userService, authHandler)
     ),
   )
 
-  def signUp[F[_]: Concurrent](
+  def signUp[F[_]: Concurrent, A](
       userService: UserService[F],
       authHandler: AuthHandler[F],
+      passwordHasher: PasswordHasher[F, A],
   ): HttpRoutes[F] =
     implicit val signUpRequestDecoder: EntityDecoder[F, SignUpRequest] = jsonOf
     val dsl = Http4sDsl[F]
@@ -35,7 +38,9 @@ object NormalUserRoutes:
     HttpRoutes.of[F] { case req @ POST -> Root =>
       for
         signUpRequest <- req.as[SignUpRequest]
-        normalUser <- userService.signUp(signUpRequest)
+        passwordHash <- passwordHasher.hashpw(signUpRequest.password)
+        normalUserRequest = signUpRequest.asNormalUser(passwordHash)
+        normalUser <- userService.create(normalUserRequest)
         token <- authHandler.authenticator.create(normalUser.id)
         response <- Created(normalUser.id.asJson).map(authHandler.authenticator.embed(_, token))
       yield response

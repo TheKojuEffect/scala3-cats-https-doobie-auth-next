@@ -1,10 +1,9 @@
 package com.nepalius.user.domain
 
-import java.util.UUID
 import cats.Applicative
-import User.UserId
-import io.circe.Encoder
-import tsec.authorization.AuthorizationInfo
+import com.nepalius.user.domain.User.UserId
+
+import java.util.UUID
 
 case class User(
     id: UserId,
@@ -14,11 +13,6 @@ case class User(
 )
 object User:
   type UserId = UUID
-
-  implicit def authRole[F[_]](implicit F: Applicative[F]): AuthorizationInfo[F, Role, User] =
-    (u: User) => F.pure(u.role)
-
-  implicit val userEncoder: Encoder[User] = Encoder.forProduct3("id", "email", "role")(u => (u.id, u.email, u.role))
 
 final case class NormalUser(
     id: UUID,

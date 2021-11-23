@@ -2,10 +2,11 @@ ThisBuild / organization := "com.nepalius"
 ThisBuild / scalaVersion := "3.1.0"
 ThisBuild / version := "0.0.1-SNAPSHOT"
 
+val CatsEffectVersion = "3.2.9"
 val Http4sVersion = "0.23.6"
 val CirceVersion = "0.14.1"
 val CirceConfigVersion = "0.8.0"
-val LogbackVersion = "1.2.6"
+val LogbackVersion = "1.2.7"
 val DoobieVersion = "1.0.0-RC1"
 val PostgresVersion = "42.3.1"
 val FlywayVersion = "8.0.3"
@@ -15,24 +16,37 @@ val EnumeratumVersion = "1.7.0"
 lazy val domain = project
   .settings(
     libraryDependencies ++= Seq(
-      "org.http4s" %% "http4s-blaze-server" % Http4sVersion,
-      "org.http4s" %% "http4s-circe" % Http4sVersion,
-      "org.http4s" %% "http4s-dsl" % Http4sVersion,
+      "ch.qos.logback" % "logback-classic" % LogbackVersion,
+      "org.typelevel" %% "cats-effect" % CatsEffectVersion,
+    ),
+  )
+
+lazy val repo = project
+  .dependsOn(domain)
+  .settings(
+    libraryDependencies ++= Seq(
       "org.postgresql" % "postgresql" % PostgresVersion,
       "org.tpolecat" %% "doobie-free" % DoobieVersion,
       "org.tpolecat" %% "doobie-core" % DoobieVersion,
       "org.tpolecat" %% "doobie-postgres" % DoobieVersion,
       "org.tpolecat" %% "doobie-hikari" % DoobieVersion,
       "org.flywaydb" % "flyway-core" % FlywayVersion,
+    ),
+  )
+
+lazy val api = project
+  .dependsOn(domain)
+  .settings(
+    libraryDependencies ++= Seq(
       "io.circe" %% "circe-generic" % CirceVersion,
-      "ch.qos.logback" % "logback-classic" % LogbackVersion,
+      "org.http4s" %% "http4s-blaze-server" % Http4sVersion,
+      "org.http4s" %% "http4s-circe" % Http4sVersion,
+      "org.http4s" %% "http4s-dsl" % Http4sVersion,
       "io.github.jmcardon" %% "tsec-common" % TSecVersion,
       "io.github.jmcardon" %% "tsec-password" % TSecVersion,
       "io.github.jmcardon" %% "tsec-http4s" % TSecVersion,
     ),
   )
-lazy val repo = project.dependsOn(domain)
-lazy val api = project.dependsOn(domain)
 
 lazy val root = (project in file("."))
   .settings(name := "NepaliUS")

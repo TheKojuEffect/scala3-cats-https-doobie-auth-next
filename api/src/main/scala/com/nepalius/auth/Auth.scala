@@ -3,6 +3,7 @@ package com.nepalius.auth
 import cats.effect.Sync
 import cats.implicits.*
 import com.nepalius.user.domain.User
+import com.nepalius.user.domain.UserService
 import User.UserId
 import tsec.authentication.*
 
@@ -16,11 +17,15 @@ object Auth:
   type AuthHandler[F[_]] = SecuredRequestHandler[F, UserId, User, AuthEncryptedCookie[AES128GCM, UserId]]
 
   def authHandler[F[_]: Sync](
-      identityStore: IdentityStore[F, UserId, User],
+      userService: UserService[F],
   ): AuthHandler[F] =
 
     implicit val encryptor: JAuthEncryptor[F, AES128GCM] = AES128GCM.genEncryptor[F]
     implicit val gcmStrategy: IvGen[F, AES128GCM] = AES128GCM.defaultIvStrategy[F]
+
+    val identityStore = new IdentityStore[F, UserId, User] {
+      override def get(id: UserId) = userService.getUser(id)
+    }
 
     val key = AES128GCM.generateKey
     val settings = TSecCookieSettings(

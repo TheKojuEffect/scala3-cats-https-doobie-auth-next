@@ -26,13 +26,13 @@ object Server:
       userRepo = UserRepoImpl(transactor)
       postRepo = PostRepoImpl(transactor)
       passwordHasher = BCrypt.syncPasswordHasher[F]
-      userService = UserService(userRepo, passwordHasher)
-      authHandler = Auth.authHandler(userRepo)
+      userService = UserService(userRepo)
+      authHandler = Auth.authHandler(userService)
       postService = PostService(postRepo)
       httpApp = (
         ViewRoutes.index <+>
           AuthRoutes.routes(userService, passwordHasher, authHandler) <+>
-          NormalUserRoutes.routes(userService, authHandler) <+>
+          NormalUserRoutes.routes(userService, authHandler, passwordHasher) <+>
           PostRoutes.routes(authHandler, postService)
       ).orNotFound
       _ <- Resource.eval(DatabaseSetup.initDb(conf.db))

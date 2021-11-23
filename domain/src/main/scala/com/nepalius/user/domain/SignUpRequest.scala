@@ -1,7 +1,5 @@
 package com.nepalius.user.domain
 
-
-
 import java.util.UUID
 
 final case class SignUpRequest(
