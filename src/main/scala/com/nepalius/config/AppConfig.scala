@@ -4,17 +4,6 @@ final case class AppConfig(server: ServerConfig, db: DatabaseConfig)
 
 final case class ServerConfig(host: String, port: Int)
 
-case class DatabaseConfig(
-    url: String,
-    user: String,
-    password: String,
-    driver: String,
-    connections: DatabaseConnectionsConfig,
-)
-
-case class DatabaseConnectionsConfig(poolSize: Int)
-
-
 object AppConfig {
 
   // Until config library is published for scala 3
@@ -25,7 +14,7 @@ object AppConfig {
       "postgres",
       "postgres",
       "org.postgresql.Driver",
-      DatabaseConnectionsConfig(10)
-    )
+      DatabaseConnectionsConfig(10),
+    ),
   )
 }

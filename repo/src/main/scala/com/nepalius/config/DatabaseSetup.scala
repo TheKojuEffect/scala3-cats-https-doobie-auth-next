@@ -9,9 +9,7 @@ import org.flywaydb.core.Flyway
 
 object DatabaseSetup:
 
-  def dbTransactor[F[_]: Async](
-      dbConfig: DatabaseConfig,
-  ): Resource[F, Transactor[F]] =
+  def dbTransactor[F[_]: Async](dbConfig: DatabaseConfig): Resource[F, Transactor[F]] =
     for
       connectionContext <- ExecutionContexts.fixedThreadPool[F](dbConfig.connections.poolSize)
       transactor <- HikariTransactor.newHikariTransactor(
