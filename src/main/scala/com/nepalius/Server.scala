@@ -15,7 +15,7 @@ import com.nepalius.user.repo.UserRepoImpl
 import com.nepalius.view.ViewRoutes
 import org.http4s.blaze.server.BlazeServerBuilder
 import org.http4s.implicits.*
-import org.http4s.server.{Server as HttpServer}
+import org.http4s.server.Server as HttpServer
 import tsec.passwordhashers.jca.BCrypt
 
 object Server:

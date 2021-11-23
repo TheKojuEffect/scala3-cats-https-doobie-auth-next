@@ -1,6 +1,5 @@
 package com.nepalius.post.domain
 
-import com.nepalius.post.api.PostRequest
 import com.nepalius.user.domain.User
 
 import java.time.LocalDateTime

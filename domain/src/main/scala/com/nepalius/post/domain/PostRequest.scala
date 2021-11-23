@@ -1,6 +1,4 @@
-package com.nepalius.post.api
-
-
+package com.nepalius.post.domain
 
 case class PostRequest(
     message: String,

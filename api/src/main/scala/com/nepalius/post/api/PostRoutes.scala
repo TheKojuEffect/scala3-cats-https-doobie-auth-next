@@ -3,7 +3,7 @@ package com.nepalius.post.api
 import cats.effect.kernel.Concurrent
 import cats.implicits.*
 import com.nepalius.auth.Auth.AuthHandler
-import com.nepalius.post.domain.{Post, PostService}
+import com.nepalius.post.domain.{Post, PostRequest, PostService}
 import io.circe.generic.auto.*
 import org.http4s.circe.{jsonEncoderOf, jsonOf}
 import org.http4s.dsl.Http4sDsl

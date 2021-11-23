@@ -1,3 +1,7 @@
+ThisBuild / organization := "com.nepalius"
+ThisBuild / scalaVersion := "3.1.0"
+ThisBuild / version := "0.0.1-SNAPSHOT"
+
 val Http4sVersion = "0.23.6"
 val CirceVersion = "0.14.1"
 val CirceConfigVersion = "0.8.0"
@@ -8,12 +12,8 @@ val FlywayVersion = "8.0.3"
 val TSecVersion = "0.4.0"
 val EnumeratumVersion = "1.7.0"
 
-lazy val root = (project in file("."))
+lazy val domain = project
   .settings(
-    organization := "com.nepalius",
-    name := "NepaliUS",
-    version := "0.0.1-SNAPSHOT",
-    scalaVersion := "3.1.0",
     libraryDependencies ++= Seq(
       "org.http4s" %% "http4s-blaze-server" % Http4sVersion,
       "org.http4s" %% "http4s-circe" % Http4sVersion,
@@ -31,6 +31,14 @@ lazy val root = (project in file("."))
       "io.github.jmcardon" %% "tsec-http4s" % TSecVersion,
     ),
   )
+lazy val repo = project.dependsOn(domain)
+lazy val api = project.dependsOn(domain)
+
+lazy val root = (project in file("."))
+  .settings(name := "NepaliUS")
+  .aggregate(domain, api, repo)
+  .settings(reStart / aggregate := false)
+  .dependsOn(domain, api, repo)
 
 enablePlugins(ScalafmtPlugin)
 scalacOptions ++= Seq(
