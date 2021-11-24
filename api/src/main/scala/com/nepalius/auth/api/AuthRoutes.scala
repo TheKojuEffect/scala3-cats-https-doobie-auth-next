@@ -43,7 +43,10 @@ object AuthRoutes:
         logInRequest <- OptionT.liftF(req.as[LogInRequest])
         user <- userService.getUserByEmail(logInRequest.email)
         verificationStatus <- OptionT.liftF(
-          passwordHasher.checkpw(logInRequest.password, PasswordHash[A](user.password)),
+          passwordHasher.checkpw(
+            logInRequest.password,
+            PasswordHash[A](user.password),
+          ),
         )
         _ <- OptionT.fromOption[F](verificationStatus match {
           case Verified => Option(())
@@ -65,7 +68,9 @@ object AuthRoutes:
     import dsl.*
     authHandler.liftService(
       TSecAuthService { case req @ POST -> Root `asAuthed` _ =>
-        Response[F]().removeCookie(req.authenticator.toCookie.copy(content = "")).pure[F]
+        Response[F]()
+          .removeCookie(req.authenticator.toCookie.copy(content = ""))
+          .pure[F]
       },
     )
 
@@ -75,7 +80,10 @@ object AuthRoutes:
     val dsl = Http4sDsl[F]
     import dsl.*
 
-    implicit val userEncoder: Encoder[User] = Encoder.forProduct3("id", "email", "role")(u => (u.id, u.email, u.role.role))
+    implicit val userEncoder: Encoder[User] =
+      Encoder.forProduct3("id", "email", "role")(u =>
+        (u.id, u.email, u.role.role),
+      )
 
     authHandler.liftService(
       TSecAuthService { case GET -> Root `asAuthed` user =>

@@ -42,7 +42,8 @@ object NormalUserRoutes:
         normalUserRequest = signUpRequest.asNormalUser(passwordHash)
         normalUser <- userService.create(normalUserRequest)
         token <- authHandler.authenticator.create(normalUser.id)
-        response <- Created(normalUser.id.asJson).map(authHandler.authenticator.embed(_, token))
+        response <- Created(normalUser.id.asJson)
+          .map(authHandler.authenticator.embed(_, token))
       yield response
     }
 
@@ -62,7 +63,6 @@ object NormalUserRoutes:
             _ <- userService.updateUserProfile(id, profile)
             result <- Ok()
           yield result
-        else
-          NotFound()
+        else NotFound()
       },
     )

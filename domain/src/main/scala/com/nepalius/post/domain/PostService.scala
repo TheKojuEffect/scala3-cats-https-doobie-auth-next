@@ -12,6 +12,13 @@ object PostService:
   def apply[F[_]](postRepo: PostRepo[F]): PostService[F] = new PostService[F] {
     override def create(post: PostRequest, user: User): F[Post] =
       postRepo.create(
-        Post(UUID.randomUUID(), post.message, post.targetState, post.targetZipCode, user.id, LocalDateTime.now()),
+        Post(
+          UUID.randomUUID(),
+          post.message,
+          post.targetState,
+          post.targetZipCode,
+          user.id,
+          LocalDateTime.now(),
+        ),
       )
   }

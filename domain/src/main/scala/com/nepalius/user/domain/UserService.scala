@@ -19,10 +19,15 @@ object UserService:
 
     override def getUser(id: UserId): OptionT[F, User] = userRepo.getUser(id)
 
-    override def getUserByEmail(email: String): OptionT[F, User] = userRepo.getUserByEmail(email)
+    override def getUserByEmail(email: String): OptionT[F, User] =
+      userRepo.getUserByEmail(email)
 
-    override def create(normalUser: NormalUser): F[NormalUser] = userRepo.create(normalUser)
+    override def create(normalUser: NormalUser): F[NormalUser] =
+      userRepo.create(normalUser)
 
-    override def updateUserProfile(userId: UserId, profile: UserProfile): F[UserProfile] =
+    override def updateUserProfile(
+        userId: UserId,
+        profile: UserProfile,
+    ): F[UserProfile] =
       userRepo.updateUserProfile(userId, profile)
   }

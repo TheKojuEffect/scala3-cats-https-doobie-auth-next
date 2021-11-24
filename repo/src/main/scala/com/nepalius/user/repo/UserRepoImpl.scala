@@ -26,13 +26,18 @@ class UserRepoImpl[F[_]: MonadCancelThrow](val transactor: Transactor[F])
       .transact(transactor)
       .as(user)
 
-  override def updateUserProfile(userId: UserId, profile: UserProfile): F[UserProfile] =
+  override def updateUserProfile(
+      userId: UserId,
+      profile: UserProfile,
+  ): F[UserProfile] =
     updateProfile(userId, profile).run
       .transact(transactor)
       .as(profile)
 
 object UserRepoImpl:
-  def apply[F[_]: MonadCancelThrow](transactor: Transactor[F]): UserRepoImpl[F] =
+  def apply[F[_]: MonadCancelThrow](
+      transactor: Transactor[F],
+  ): UserRepoImpl[F] =
     new UserRepoImpl[F](transactor)
 
 private object UserSql:

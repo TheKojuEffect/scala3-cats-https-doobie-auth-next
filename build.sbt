@@ -14,6 +14,7 @@ val TSecVersion = "0.4.0"
 val EnumeratumVersion = "1.7.0"
 
 lazy val domain = project
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       "ch.qos.logback" % "logback-classic" % LogbackVersion,
@@ -23,6 +24,7 @@ lazy val domain = project
 
 lazy val repo = project
   .dependsOn(domain)
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       "org.postgresql" % "postgresql" % PostgresVersion,
@@ -36,6 +38,7 @@ lazy val repo = project
 
 lazy val api = project
   .dependsOn(domain)
+  .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
       "io.circe" %% "circe-generic" % CirceVersion,
@@ -50,12 +53,14 @@ lazy val api = project
 
 lazy val root = (project in file("."))
   .settings(name := "NepaliUS")
+  .settings(commonSettings)
   .aggregate(domain, api, repo)
   .settings(reStart / aggregate := false)
   .dependsOn(domain, api, repo)
 
-enablePlugins(ScalafmtPlugin)
-scalacOptions ++= Seq(
-  "-new-syntax",
-  "-source:future",
+lazy val commonSettings = Seq(
+  scalacOptions ++= Seq(
+    "-new-syntax",
+    "-source:future",
+  ),
 )

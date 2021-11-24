@@ -1,6 +1,5 @@
 package com.nepalius.post.domain
 
-
 import com.nepalius.post.domain.Post.PostId
 import com.nepalius.user.domain.User.UserId
 

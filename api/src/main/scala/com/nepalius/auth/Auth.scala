@@ -14,14 +14,21 @@ import scala.concurrent.duration.DurationInt
 
 object Auth:
 
-  type AuthHandler[F[_]] = SecuredRequestHandler[F, UserId, User, AuthEncryptedCookie[AES128GCM, UserId]]
+  type AuthHandler[F[_]] = SecuredRequestHandler[
+    F,
+    UserId,
+    User,
+    AuthEncryptedCookie[AES128GCM, UserId],
+  ]
 
   def authHandler[F[_]: Sync](
       userService: UserService[F],
   ): AuthHandler[F] =
 
-    implicit val encryptor: JAuthEncryptor[F, AES128GCM] = AES128GCM.genEncryptor[F]
-    implicit val gcmStrategy: IvGen[F, AES128GCM] = AES128GCM.defaultIvStrategy[F]
+    implicit val encryptor: JAuthEncryptor[F, AES128GCM] =
+      AES128GCM.genEncryptor[F]
+    implicit val gcmStrategy: IvGen[F, AES128GCM] =
+      AES128GCM.defaultIvStrategy[F]
 
     val identityStore = new IdentityStore[F, UserId, User] {
       override def get(id: UserId) = userService.getUser(id)
