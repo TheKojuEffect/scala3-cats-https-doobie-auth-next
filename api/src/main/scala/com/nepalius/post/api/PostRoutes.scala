@@ -10,6 +10,7 @@ import org.http4s.dsl.Http4sDsl
 import org.http4s.server.Router
 import org.http4s.{EntityDecoder, EntityEncoder, HttpRoutes}
 import tsec.authentication.{TSecAuthService, asAuthed}
+import com.nepalius.location.StateCirce.*
 
 object PostRoutes:
 

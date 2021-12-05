@@ -12,6 +12,7 @@ import org.http4s.server.Router
 import org.http4s.{EntityDecoder, HttpRoutes}
 import tsec.authentication.{TSecAuthService, *}
 import tsec.passwordhashers.PasswordHasher
+import com.nepalius.location.StateCirce.*
 
 object NormalUserRoutes:
 

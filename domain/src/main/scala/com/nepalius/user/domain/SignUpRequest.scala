@@ -1,5 +1,7 @@
 package com.nepalius.user.domain
 
+import com.nepalius.location.State
+
 import java.util.UUID
 
 final case class SignUpRequest(
@@ -7,7 +9,7 @@ final case class SignUpRequest(
     password: String,
     firstName: String,
     lastName: String,
-    state: String,
+    state: State,
     zipCode: String,
 ):
   def asNormalUser[A](passwordHash: String): NormalUser =
