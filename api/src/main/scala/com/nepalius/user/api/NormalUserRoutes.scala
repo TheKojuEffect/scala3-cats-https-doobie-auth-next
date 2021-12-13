@@ -13,10 +13,11 @@ import org.http4s.{EntityDecoder, HttpRoutes}
 import tsec.authentication.{TSecAuthService, *}
 import tsec.passwordhashers.PasswordHasher
 import com.nepalius.location.StateCirce.*
+import cats.effect.kernel.Async
 
 object NormalUserRoutes:
 
-  def routes[F[_]: Concurrent, A](
+  def routes[F[_]: Async, A](
       userService: UserService[F],
       authHandler: AuthHandler[F],
       passwordHasher: PasswordHasher[F, A],
@@ -27,7 +28,7 @@ object NormalUserRoutes:
     ),
   )
 
-  def signUp[F[_]: Concurrent, A](
+  def signUp[F[_]: Async, A](
       userService: UserService[F],
       authHandler: AuthHandler[F],
       passwordHasher: PasswordHasher[F, A],
@@ -40,7 +41,7 @@ object NormalUserRoutes:
       for
         signUpRequest <- req.as[SignUpRequest]
         passwordHash <- passwordHasher.hashpw(signUpRequest.password)
-        normalUserRequest = signUpRequest.asNormalUser(passwordHash)
+        normalUserRequest <- signUpRequest.asNormalUser(passwordHash)
         normalUser <- userService.create(normalUserRequest)
         token <- authHandler.authenticator.create(normalUser.id)
         response <- Created(normalUser.id.asJson)
