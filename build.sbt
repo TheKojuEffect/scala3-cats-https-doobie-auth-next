@@ -3,6 +3,7 @@ ThisBuild / scalaVersion := "3.1.0"
 ThisBuild / version := "0.0.1-SNAPSHOT"
 
 val CatsEffectVersion = "3.3.0"
+val CatsEffectTimeVersion = "0.2.0"
 val Http4sVersion = "0.23.6"
 val CirceVersion = "0.14.1"
 val CirceConfigVersion = "0.8.0"
@@ -11,7 +12,6 @@ val DoobieVersion = "1.0.0-RC1"
 val PostgresVersion = "42.3.1"
 val FlywayVersion = "8.2.1"
 val TSecVersion = "0.4.0"
-val EnumeratumVersion = "1.7.0"
 
 lazy val domain = project
   .settings(commonSettings)
@@ -19,6 +19,7 @@ lazy val domain = project
     libraryDependencies ++= Seq(
       "ch.qos.logback" % "logback-classic" % LogbackVersion,
       "org.typelevel" %% "cats-effect" % CatsEffectVersion,
+      "io.chrisdavenport" %% "cats-effect-time" % CatsEffectTimeVersion
     ),
   )
 
