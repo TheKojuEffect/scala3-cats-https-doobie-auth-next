@@ -25,10 +25,8 @@ object Auth:
       userService: UserService[F],
   ): AuthHandler[F] =
 
-    implicit val encryptor: JAuthEncryptor[F, AES128GCM] =
-      AES128GCM.genEncryptor[F]
-    implicit val gcmStrategy: IvGen[F, AES128GCM] =
-      AES128GCM.defaultIvStrategy[F]
+    given JAuthEncryptor[F, AES128GCM] = AES128GCM.genEncryptor[F]
+    given IvGen[F, AES128GCM] = AES128GCM.defaultIvStrategy[F]
 
     val identityStore = new IdentityStore[F, UserId, User] {
       override def get(id: UserId) = userService.getUser(id)

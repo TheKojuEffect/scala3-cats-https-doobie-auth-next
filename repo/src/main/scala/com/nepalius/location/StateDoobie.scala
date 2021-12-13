@@ -6,5 +6,4 @@ import doobie.implicits.*
 
 object StateDoobie:
 
-  implicit val stateMeta: Meta[State] =
-    Meta[String].timap(State.valueOf)(_.toString)
+  given Meta[State] = Meta[String].timap(State.valueOf)(_.toString)

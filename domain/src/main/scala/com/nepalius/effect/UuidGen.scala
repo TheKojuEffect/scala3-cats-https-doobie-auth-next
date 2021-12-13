@@ -9,10 +9,10 @@ trait UuidGen[F[_]]:
   def read(string: String): F[UUID]
 
 object UuidGen:
-  def apply[F[_]: UuidGen]: UuidGen[F] = implicitly
+  def apply[F[_]: UuidGen]: UuidGen[F] = summon
 
-  implicit def forSync[F[_]: Sync]: UuidGen[F] =
-    new UuidGen[F]:
-      def make: F[UUID] = Sync[F].delay(UUID.randomUUID)
-      def read(string: String): F[UUID] =
-        ApplicativeThrow[F].catchNonFatal(UUID.fromString(string))
+  given [F[_]: Sync]: UuidGen[F] with
+    def make: F[UUID] =
+      Sync[F].delay(UUID.randomUUID)
+    def read(string: String): F[UUID] =
+      ApplicativeThrow[F].catchNonFatal(UUID.fromString(string))

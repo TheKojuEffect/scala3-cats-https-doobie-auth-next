@@ -7,7 +7,7 @@ import com.nepalius.post.repo.PostSql.insert
 import doobie.implicits.*
 import doobie.postgres.implicits.*
 import doobie.{Transactor, Update0}
-import com.nepalius.location.StateDoobie.*
+import com.nepalius.location.StateDoobie.given
 
 class PostRepoImpl[F[_]: MonadCancelThrow](val transactor: Transactor[F])
     extends PostRepo[F]:

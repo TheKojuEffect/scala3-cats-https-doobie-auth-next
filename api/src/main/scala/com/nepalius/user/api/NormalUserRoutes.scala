@@ -12,7 +12,7 @@ import org.http4s.server.Router
 import org.http4s.{EntityDecoder, HttpRoutes}
 import tsec.authentication.{TSecAuthService, *}
 import tsec.passwordhashers.PasswordHasher
-import com.nepalius.location.StateCirce.*
+import com.nepalius.location.StateCirce.given
 import cats.effect.kernel.Async
 
 object NormalUserRoutes:
@@ -33,7 +33,7 @@ object NormalUserRoutes:
       authHandler: AuthHandler[F],
       passwordHasher: PasswordHasher[F, A],
   ): HttpRoutes[F] =
-    implicit val signUpRequestDecoder: EntityDecoder[F, SignUpRequest] = jsonOf
+    given signUpRequestDecoder: EntityDecoder[F, SignUpRequest] = jsonOf
     val dsl = Http4sDsl[F]
     import dsl.*
 
@@ -53,7 +53,7 @@ object NormalUserRoutes:
       userService: UserService[F],
       authHandler: AuthHandler[F],
   ): HttpRoutes[F] =
-    implicit val userProfileDecoder: EntityDecoder[F, UserProfile] = jsonOf
+    given userProfileDecoder: EntityDecoder[F, UserProfile] = jsonOf
     val dsl = Http4sDsl[F]
     import dsl.*
 

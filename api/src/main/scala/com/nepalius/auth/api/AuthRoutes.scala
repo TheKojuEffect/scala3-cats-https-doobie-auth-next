@@ -34,7 +34,7 @@ object AuthRoutes:
       passwordHasher: PasswordHasher[F, A],
       authHandler: AuthHandler[F],
   ): HttpRoutes[F] =
-    implicit val logInRequestDecoder: EntityDecoder[F, LogInRequest] = jsonOf
+    given logInRequestDecoder: EntityDecoder[F, LogInRequest] = jsonOf
     val dsl = Http4sDsl[F]
     import dsl.*
 
@@ -80,10 +80,9 @@ object AuthRoutes:
     val dsl = Http4sDsl[F]
     import dsl.*
 
-    implicit val userEncoder: Encoder[User] =
-      Encoder.forProduct3("id", "email", "role")(u =>
-        (u.id, u.email, u.role.role),
-      )
+    given Encoder[User] = Encoder.forProduct3("id", "email", "role")(u =>
+      (u.id, u.email, u.role.role),
+    )
 
     authHandler.liftService(
       TSecAuthService { case GET -> Root `asAuthed` user =>

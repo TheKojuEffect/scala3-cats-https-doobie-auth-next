@@ -9,4 +9,4 @@ object Role:
   val Admin: Role = Role("Admin")
   val Normal: Role = Role("Normal")
 
-  implicit val eqRole: Eq[Role] = Eq.fromUniversalEquals[Role]
+  given Eq[Role] = Eq.fromUniversalEquals[Role]

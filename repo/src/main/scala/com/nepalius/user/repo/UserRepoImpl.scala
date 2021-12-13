@@ -9,7 +9,7 @@ import doobie.implicits.*
 import doobie.postgres.implicits.*
 import doobie.util.query.Query0
 import doobie.{Transactor, Update0}
-import com.nepalius.location.StateDoobie.stateMeta
+import com.nepalius.location.StateDoobie.given
 
 class UserRepoImpl[F[_]: MonadCancelThrow](val transactor: Transactor[F])
     extends UserRepo[F]:
