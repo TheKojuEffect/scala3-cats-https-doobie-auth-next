@@ -4,6 +4,7 @@ import cats.Monad
 import cats.data.OptionT
 import cats.effect.Concurrent
 import cats.implicits.*
+import com.nepalius.Controller
 import com.nepalius.auth.Auth.AuthHandler
 import com.nepalius.user.domain.{User, UserService}
 import io.circe.generic.auto.*
@@ -17,17 +18,19 @@ import tsec.common.Verified
 import tsec.passwordhashers.{PasswordHash, PasswordHasher}
 import io.circe.Encoder
 
-object AuthRoutes:
+object AuthController:
 
-  def routes[F[_]: Concurrent, A](
+  def apply[F[_]: Concurrent, A](
       userService: UserService[F],
       passwordHasher: PasswordHasher[F, A],
       authHandler: AuthHandler[F],
-  ): HttpRoutes[F] = Router(
-    "login" -> logIn(userService, passwordHasher, authHandler),
-    "logout" -> logOut(authHandler),
-    "current-user" -> currentUser(authHandler),
-  )
+  ): Controller[F] = new Controller[F] {
+    override val routes: HttpRoutes[F] = Router(
+      "login" -> logIn(userService, passwordHasher, authHandler),
+      "logout" -> logOut(authHandler),
+      "current-user" -> currentUser(authHandler),
+    )
+  }
 
   def logIn[F[_]: Concurrent, A](
       userService: UserService[F],

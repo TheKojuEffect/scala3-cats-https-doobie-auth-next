@@ -2,6 +2,7 @@ package com.nepalius.user.api
 
 import cats.effect.Concurrent
 import cats.implicits.*
+import com.nepalius.Controller
 import com.nepalius.auth.Auth.AuthHandler
 import com.nepalius.user.domain.{SignUpRequest, UserProfile, UserService}
 import io.circe.generic.auto.*
@@ -15,18 +16,21 @@ import tsec.passwordhashers.PasswordHasher
 import com.nepalius.location.StateCirce.given
 import cats.effect.kernel.Async
 
-object NormalUserRoutes:
+object NormalUserController:
 
-  def routes[F[_]: Async, A](
+  def apply[F[_]: Async, A](
       userService: UserService[F],
       authHandler: AuthHandler[F],
       passwordHasher: PasswordHasher[F, A],
-  ): HttpRoutes[F] = Router(
-    "normal-users" -> (
-      signUp(userService, authHandler, passwordHasher) <+>
-        update(userService, authHandler)
-    ),
-  )
+  ): Controller[F] =
+    new Controller[F] {
+      override val routes: HttpRoutes[F] = Router(
+        "normal-users" -> (
+          signUp(userService, authHandler, passwordHasher) <+>
+            update(userService, authHandler)
+        ),
+      )
+    }
 
   def signUp[F[_]: Async, A](
       userService: UserService[F],

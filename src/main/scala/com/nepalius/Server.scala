@@ -4,15 +4,14 @@ import cats.effect.Resource
 import cats.effect.kernel.Async
 import cats.implicits.*
 import com.nepalius.auth.Auth
-import com.nepalius.auth.api.AuthRoutes
+import com.nepalius.auth.api.AuthController
 import com.nepalius.config.{AppConfig, DatabaseSetup}
 import com.nepalius.post.api.PostController
 import com.nepalius.post.domain.PostService
 import com.nepalius.post.repo.PostRepoImpl
-import com.nepalius.user.api.NormalUserRoutes
+import com.nepalius.user.api.NormalUserController
 import com.nepalius.user.domain.UserService
 import com.nepalius.user.repo.UserRepoImpl
-import com.nepalius.view.ViewRoutes
 import org.http4s.blaze.server.BlazeServerBuilder
 import org.http4s.implicits.*
 import org.http4s.server.Server as HttpServer
@@ -29,12 +28,11 @@ object Server:
       userService = UserService(userRepo)
       authHandler = Auth.authHandler(userService)
       postService = PostService(postRepo)
-      httpApp = (
-        ViewRoutes.index <+>
-          AuthRoutes.routes(userService, passwordHasher, authHandler) <+>
-          NormalUserRoutes.routes(userService, authHandler, passwordHasher) <+>
-          PostController(authHandler, postService).routes
-      ).orNotFound
+      httpApp = HttpApp(
+        AuthController(userService, passwordHasher, authHandler),
+        NormalUserController(userService, authHandler, passwordHasher),
+        PostController(authHandler, postService),
+      )
       _ <- Resource.eval(DatabaseSetup.initDb(conf.db))
       server <- BlazeServerBuilder[F]
         .bindHttp(conf.server.port, conf.server.host)
