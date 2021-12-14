@@ -6,7 +6,7 @@ import cats.implicits.*
 import com.nepalius.auth.Auth
 import com.nepalius.auth.api.AuthRoutes
 import com.nepalius.config.{AppConfig, DatabaseSetup}
-import com.nepalius.post.api.PostRoutes
+import com.nepalius.post.api.PostController
 import com.nepalius.post.domain.PostService
 import com.nepalius.post.repo.PostRepoImpl
 import com.nepalius.user.api.NormalUserRoutes
@@ -33,7 +33,7 @@ object Server:
         ViewRoutes.index <+>
           AuthRoutes.routes(userService, passwordHasher, authHandler) <+>
           NormalUserRoutes.routes(userService, authHandler, passwordHasher) <+>
-          PostRoutes.routes(authHandler, postService)
+          PostController(authHandler, postService).routes
       ).orNotFound
       _ <- Resource.eval(DatabaseSetup.initDb(conf.db))
       server <- BlazeServerBuilder[F]
