@@ -10,7 +10,7 @@ val CirceConfigVersion = "0.8.0"
 val LogbackVersion = "1.2.8"
 val DoobieVersion = "1.0.0-RC1"
 val PostgresVersion = "42.3.1"
-val FlywayVersion = "8.2.1"
+val FlywayVersion = "8.2.2"
 val TSecVersion = "0.4.0"
 
 lazy val domain = project
