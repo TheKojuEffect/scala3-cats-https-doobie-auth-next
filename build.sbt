@@ -4,7 +4,7 @@ ThisBuild / version := "0.0.1-SNAPSHOT"
 
 val CatsEffectVersion = "3.3.4"
 val CatsEffectTimeVersion = "0.2.0"
-val Http4sVersion = "0.23.7"
+val Http4sVersion = "0.23.8"
 val CirceVersion = "0.14.1"
 val CirceConfigVersion = "0.8.0"
 val LogbackVersion = "1.2.10"
