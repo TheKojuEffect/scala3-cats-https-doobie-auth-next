@@ -2,7 +2,7 @@ ThisBuild / organization := "com.nepalius"
 ThisBuild / scalaVersion := "3.1.1"
 ThisBuild / version := "0.0.1-SNAPSHOT"
 
-val CatsEffectVersion = "3.3.7"
+val CatsEffectVersion = "3.3.9"
 val CatsEffectTimeVersion = "0.2.0"
 val Http4sVersion = "0.23.11"
 val CirceVersion = "0.14.1"
