@@ -1,5 +1,5 @@
 ThisBuild / organization := "com.nepalius"
-ThisBuild / scalaVersion := "3.1.1"
+ThisBuild / scalaVersion := "3.1.2"
 ThisBuild / version := "0.0.1-SNAPSHOT"
 
 val CatsEffectVersion = "3.3.11"
