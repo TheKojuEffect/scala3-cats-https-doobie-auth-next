@@ -45,7 +45,7 @@ lazy val api = project
   .settings(
     libraryDependencies ++= Seq(
       "io.circe" %% "circe-generic" % V.Circe,
-      "org.http4s" %% "http4s-blaze-server" % V.Http4s,
+      "org.http4s" %% "http4s-ember-server" % V.Http4s,
       "org.http4s" %% "http4s-circe" % V.Http4s,
       "org.http4s" %% "http4s-dsl" % V.Http4s,
       "io.github.jmcardon" %% "tsec-common" % V.TSec,

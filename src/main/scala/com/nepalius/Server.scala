@@ -3,6 +3,7 @@ package com.nepalius
 import cats.effect.Resource
 import cats.effect.kernel.Async
 import cats.implicits.*
+import com.comcast.ip4s.*
 import com.nepalius.auth.Auth
 import com.nepalius.auth.api.AuthController
 import com.nepalius.config.{AppConfig, DatabaseSetup}
@@ -14,7 +15,7 @@ import com.nepalius.user.domain.UserService
 import com.nepalius.user.repo.UserRepoImpl
 import io.circe.config.parser
 import io.circe.generic.auto.*
-import org.http4s.blaze.server.BlazeServerBuilder
+import org.http4s.ember.server.EmberServerBuilder
 import org.http4s.implicits.*
 import org.http4s.server.Server as HttpServer
 import tsec.passwordhashers.jca.BCrypt
@@ -36,8 +37,10 @@ object Server:
         PostController(authHandler, postService),
       )
       _ <- Resource.eval(DatabaseSetup.initDb(conf.db))
-      server <- BlazeServerBuilder[F]
-        .bindHttp(conf.server.port, conf.server.host)
+      server <- EmberServerBuilder
+        .default[F]
+        .withHost(Host.fromString(conf.server.host).get)
+        .withPort(Port.fromInt(conf.server.port).get)
         .withHttpApp(httpApp)
-        .resource
+        .build
     yield server
