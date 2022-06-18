@@ -2,24 +2,26 @@ ThisBuild / organization := "com.nepalius"
 ThisBuild / scalaVersion := "3.1.2"
 ThisBuild / version := "0.0.1-SNAPSHOT"
 
-val CatsEffectVersion = "3.3.12"
-val CatsEffectTimeVersion = "0.2.0"
-val Http4sVersion = "0.23.12"
-val CirceVersion = "0.14.2"
-val CirceConfigVersion = "0.8.0"
-val LogbackVersion = "1.2.11"
-val DoobieVersion = "1.0.0-RC2"
-val PostgresVersion = "42.3.6"
-val FlywayVersion = "8.5.12"
-val TSecVersion = "0.4.0"
+val V = new {
+  val CatsEffect = "3.3.12"
+  val CatsEffectTime = "0.2.0"
+  val Http4s = "0.23.12"
+  val Circe = "0.14.2"
+  val CirceConfig = "0.8.0"
+  val Logback = "1.2.11"
+  val Doobie = "1.0.0-RC2"
+  val Postgres = "42.3.6"
+  val Flyway = "8.5.12"
+  val TSec = "0.4.0"
+}
 
 lazy val domain = project
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
-      "ch.qos.logback" % "logback-classic" % LogbackVersion,
-      "org.typelevel" %% "cats-effect" % CatsEffectVersion,
-      "io.chrisdavenport" %% "cats-effect-time" % CatsEffectTimeVersion,
+      "ch.qos.logback" % "logback-classic" % V.Logback,
+      "org.typelevel" %% "cats-effect" % V.CatsEffect,
+      "io.chrisdavenport" %% "cats-effect-time" % V.CatsEffectTime,
     ),
   )
 
@@ -28,12 +30,12 @@ lazy val repo = project
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
-      "org.postgresql" % "postgresql" % PostgresVersion,
-      "org.tpolecat" %% "doobie-free" % DoobieVersion,
-      "org.tpolecat" %% "doobie-core" % DoobieVersion,
-      "org.tpolecat" %% "doobie-postgres" % DoobieVersion,
-      "org.tpolecat" %% "doobie-hikari" % DoobieVersion,
-      "org.flywaydb" % "flyway-core" % FlywayVersion,
+      "org.postgresql" % "postgresql" % V.Postgres,
+      "org.tpolecat" %% "doobie-free" % V.Doobie,
+      "org.tpolecat" %% "doobie-core" % V.Doobie,
+      "org.tpolecat" %% "doobie-postgres" % V.Doobie,
+      "org.tpolecat" %% "doobie-hikari" % V.Doobie,
+      "org.flywaydb" % "flyway-core" % V.Flyway,
     ),
   )
 
@@ -42,13 +44,13 @@ lazy val api = project
   .settings(commonSettings)
   .settings(
     libraryDependencies ++= Seq(
-      "io.circe" %% "circe-generic" % CirceVersion,
-      "org.http4s" %% "http4s-blaze-server" % Http4sVersion,
-      "org.http4s" %% "http4s-circe" % Http4sVersion,
-      "org.http4s" %% "http4s-dsl" % Http4sVersion,
-      "io.github.jmcardon" %% "tsec-common" % TSecVersion,
-      "io.github.jmcardon" %% "tsec-password" % TSecVersion,
-      "io.github.jmcardon" %% "tsec-http4s" % TSecVersion,
+      "io.circe" %% "circe-generic" % V.Circe,
+      "org.http4s" %% "http4s-blaze-server" % V.Http4s,
+      "org.http4s" %% "http4s-circe" % V.Http4s,
+      "org.http4s" %% "http4s-dsl" % V.Http4s,
+      "io.github.jmcardon" %% "tsec-common" % V.TSec,
+      "io.github.jmcardon" %% "tsec-password" % V.TSec,
+      "io.github.jmcardon" %% "tsec-http4s" % V.TSec,
     ),
   )
 
