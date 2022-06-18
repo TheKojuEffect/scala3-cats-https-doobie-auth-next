@@ -12,6 +12,8 @@ import com.nepalius.post.repo.PostRepoImpl
 import com.nepalius.user.api.NormalUserController
 import com.nepalius.user.domain.UserService
 import com.nepalius.user.repo.UserRepoImpl
+import io.circe.config.parser
+import io.circe.generic.auto.*
 import org.http4s.blaze.server.BlazeServerBuilder
 import org.http4s.implicits.*
 import org.http4s.server.Server as HttpServer
@@ -20,7 +22,7 @@ import tsec.passwordhashers.jca.BCrypt
 object Server:
   def create[F[_]: Async]: Resource[F, HttpServer] =
     for
-      conf <- Resource.pure(AppConfig.default)
+      conf <- Resource.eval(parser.decodePathF[F, AppConfig]("nepalius"))
       transactor <- DatabaseSetup.dbTransactor(conf.db)
       userRepo = UserRepoImpl(transactor)
       postRepo = PostRepoImpl(transactor)

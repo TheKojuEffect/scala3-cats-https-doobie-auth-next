@@ -7,7 +7,7 @@ val V = new {
   val CatsEffectTime = "0.2.0"
   val Http4s = "0.23.12"
   val Circe = "0.14.2"
-  val CirceConfig = "0.8.0"
+  val CirceConfig = "0.9.0"
   val Logback = "1.2.11"
   val Doobie = "1.0.0-RC2"
   val Postgres = "42.3.6"
@@ -59,6 +59,11 @@ lazy val root = (project in file("."))
   .settings(commonSettings)
   .aggregate(domain, api, repo)
   .settings(reStart / aggregate := false)
+  .settings(
+    libraryDependencies ++= Seq(
+      "com.hunorkovacs" %% "circe-config" % V.CirceConfig,
+    ),
+  )
   .dependsOn(domain, api, repo)
 
 lazy val commonSettings = Seq(
