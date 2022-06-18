@@ -4,13 +4,13 @@ ThisBuild / version := "0.0.1-SNAPSHOT"
 
 val CatsEffectVersion = "3.3.12"
 val CatsEffectTimeVersion = "0.2.0"
-val Http4sVersion = "0.23.11"
+val Http4sVersion = "0.23.12"
 val CirceVersion = "0.14.2"
 val CirceConfigVersion = "0.8.0"
 val LogbackVersion = "1.2.11"
 val DoobieVersion = "1.0.0-RC2"
-val PostgresVersion = "42.3.5"
-val FlywayVersion = "8.2.2"
+val PostgresVersion = "42.3.6"
+val FlywayVersion = "8.5.12"
 val TSecVersion = "0.4.0"
 
 lazy val domain = project
