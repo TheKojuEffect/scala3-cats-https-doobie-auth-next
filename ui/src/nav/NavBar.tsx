@@ -1,21 +1,22 @@
 import React, {useState} from 'react';
-import {alpha, makeStyles, Theme} from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import MoreIcon from '@material-ui/icons/MoreVert';
-import {PeopleOutline} from "@material-ui/icons";
+import { makeStyles } from 'tss-react/mui';
+import { alpha, Theme } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import InputBase from '@mui/material/InputBase';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
+import MoreIcon from '@mui/icons-material/MoreVert';
+import {PeopleOutline} from "@mui/icons-material";
 import SignUpButton from "./SignUpButton";
 import SignInButton from "./SignInButton";
 import {useAuth} from "../auth/Auth";
 import SignOutButton from "./SignOutButton";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles()((theme: Theme) => ({
         grow: {
             flexGrow: 1,
         },
@@ -77,11 +78,10 @@ const useStyles = makeStyles((theme: Theme) => ({
                 display: 'none',
             },
         },
-    }),
-);
+    }));
 
 export default function NavBar() {
-    const classes = useStyles();
+    const { classes } = useStyles();
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
 
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);

@@ -1,17 +1,17 @@
 import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import {makeStyles} from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import {Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme} from "@material-ui/core";
-import {Close} from "@material-ui/icons";
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { makeStyles } from 'tss-react/mui';
+import Container from '@mui/material/Container';
+import {Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme} from "@mui/material";
+import {Close} from "@mui/icons-material";
 import {useForm} from "react-hook-form";
 import {useAuth} from "../auth/Auth";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles()((theme) => ({
     paper: {
         display: 'flex',
         flexDirection: 'column',
@@ -46,7 +46,7 @@ interface SignInDialogProps {
 }
 
 export default function SignInDialog({open, onClose}: SignInDialogProps) {
-    const classes = useStyles();
+    const { classes } = useStyles();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const {refreshAuth} = useAuth();

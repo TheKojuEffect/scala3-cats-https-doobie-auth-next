@@ -1,19 +1,20 @@
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
-import {makeStyles, Theme} from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import {Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme} from '@material-ui/core';
-import {Close} from '@material-ui/icons';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Grid from '@mui/material/Grid';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import { makeStyles } from 'tss-react/mui';
+import { Theme } from '@mui/material/styles';
+import Container from '@mui/material/Container';
+import {Dialog, DialogContent, DialogTitle, IconButton, useMediaQuery, useTheme} from '@mui/material';
+import {Close} from '@mui/icons-material';
 import {Controller, useForm} from 'react-hook-form';
 import StateSelect from './StateSelect';
 import {StateCode} from './State';
 import {useAuth} from "../auth/Auth";
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles()((theme: Theme) => ({
     paper: {
         display: 'flex',
         flexDirection: 'column',
@@ -52,7 +53,7 @@ type SignUpRequest = {
 };
 
 export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
-    const classes = useStyles();
+    const { classes } = useStyles();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const {refreshAuth} = useAuth();
