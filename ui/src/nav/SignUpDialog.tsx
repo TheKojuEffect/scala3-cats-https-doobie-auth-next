@@ -60,7 +60,7 @@ export default function SignUpDialog({open, onClose}: SignUpDialogProps) {
 
     const {register, handleSubmit, control, formState: {errors}} = useForm<SignUpRequest>();
     const onSubmit = (data: SignUpRequest) => {
-        fetch('/normal-users', {
+        fetch('/api/normal-users', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

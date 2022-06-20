@@ -1,4 +1,4 @@
-import React, {FC, useContext, useEffect, useState} from "react";
+import React, {FC, PropsWithChildren, useContext, useEffect, useState} from "react";
 
 export enum AuthStatus {
     UNAUTHENTICATED,
@@ -16,12 +16,12 @@ type Auth = {
 
 const AuthContext = React.createContext<Auth | undefined>(undefined);
 
-export const AuthProvider: FC = ({children}) => {
+export const AuthProvider: FC<PropsWithChildren> = ({children}) => {
     let [status, setStatus] = useState(AuthStatus.UNAUTHENTICATED);
 
     function refreshAuth() {
         setStatus(AuthStatus.LOADING);
-        fetch('/current-user')
+        fetch('/api/current-user')
             .then((response) => {
                 setStatus(response.status === 200 ? AuthStatus.AUTHENTICATED : AuthStatus.UNAUTHENTICATED);
             });
