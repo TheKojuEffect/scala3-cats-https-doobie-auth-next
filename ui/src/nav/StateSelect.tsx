@@ -1,9 +1,8 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/lab/Autocomplete';
 import {makeStyles} from 'tss-react/mui';
 import {State, states} from "./State";
-import {FilterOptionsState} from "@mui/material";
+import {Autocomplete, FilterOptionsState} from "@mui/material";
 
 const useStyles = makeStyles()({
     option: {
@@ -21,13 +20,7 @@ interface StateSelectProps {
 }
 
 export default function StateSelect({onChange, error}: StateSelectProps) {
-    const { classes } = useStyles();
-
-    // const filterOptions = createFilterOptions({
-    //     ignoreCase: true,
-    //     matchFrom: 'any',
-    //     stringify: (state: State) => state.name,
-    // });
+    const {classes} = useStyles();
 
     return (
         <Autocomplete
@@ -35,7 +28,7 @@ export default function StateSelect({onChange, error}: StateSelectProps) {
             classes={{option: classes.option}}
             autoHighlight
             // getOptionLabel={(option: State) => `${option.name} (${option.code.toString()})`}
-            renderOption={(props, option:State) => <>{option.name} ({option.code})</>}
+            renderOption={(props, option: State) => <>{option.name} ({option.code})</>}
             onChange={(event, value) => onChange(value)}
             filterOptions={
                 (options: State[], state: FilterOptionsState<State>) => {
