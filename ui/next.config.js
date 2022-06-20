@@ -6,7 +6,7 @@ module.exports = {
             beforeFiles: [
                 {
                     source: '/api/:path*',
-                    destination: 'http://localhost:9000/:path*',
+                    destination: `${process.env.API_URL}/:path*`,
                     basePath: false
                 }
             ]
