@@ -11,7 +11,7 @@ val V = new {
   val Logback = "1.2.11"
   val Doobie = "1.0.0-RC2"
   val Postgres = "42.3.6"
-  val Flyway = "8.5.12"
+  val Flyway = "8.5.13"
   val TSec = "0.4.0"
 }
 
