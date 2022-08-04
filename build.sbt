@@ -10,7 +10,7 @@ val V = new {
   val CirceConfig = "0.9.0"
   val Logback = "1.2.11"
   val Doobie = "1.0.0-RC2"
-  val Postgres = "42.3.6"
+  val Postgres = "42.4.1"
   val Flyway = "8.5.13"
   val TSec = "0.4.0"
 }
