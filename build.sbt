@@ -3,15 +3,15 @@ ThisBuild / scalaVersion := "3.1.3"
 ThisBuild / version := "0.0.1-SNAPSHOT"
 
 val V = new {
-  val CatsEffect = "3.3.12"
+  val CatsEffect = "3.3.14"
   val CatsEffectTime = "0.2.0"
-  val Http4s = "0.23.12"
+  val Http4s = "0.23.14"
   val Circe = "0.14.2"
   val CirceConfig = "0.9.0"
   val Logback = "1.2.11"
   val Doobie = "1.0.0-RC2"
-  val Postgres = "42.3.6"
-  val Flyway = "8.5.12"
+  val Postgres = "42.4.2"
+  val Flyway = "8.5.13"
   val TSec = "0.4.0"
 }
 
