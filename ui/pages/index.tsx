@@ -9,11 +9,8 @@ const Home: NextPage = () => {
         <Container maxWidth="lg">
             <Box
                 sx={{
-                    my: 4,
+                    my: 1,
                     display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
                 }}
             >
                 <NavBar/>
