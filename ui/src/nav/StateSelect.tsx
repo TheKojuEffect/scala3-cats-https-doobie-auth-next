@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import {makeStyles} from 'tss-react/mui';
 import {State, states} from "./State";
 import {Autocomplete, FilterOptionsState} from "@mui/material";
+import Box from "@mui/material/Box";
 
 const useStyles = makeStyles()({
     option: {
@@ -27,8 +28,12 @@ export default function StateSelect({onChange, error}: StateSelectProps) {
             options={states}
             classes={{option: classes.option}}
             autoHighlight
-            // getOptionLabel={(option: State) => `${option.name} (${option.code.toString()})`}
-            renderOption={(props, option: State) => <>{option.name} ({option.code})</>}
+            getOptionLabel={(option: State) => `${option.name} (${option.code})`}
+            renderOption={(props, state: State) => (
+                <Box component="li" {...props}>
+                    {state.name} ({state.code})
+                </Box>
+            )}
             onChange={(event, value) => onChange(value)}
             filterOptions={
                 (options: State[], state: FilterOptionsState<State>) => {
