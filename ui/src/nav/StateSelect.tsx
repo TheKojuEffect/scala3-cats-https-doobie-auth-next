@@ -1,19 +1,8 @@
 import React from 'react';
 import TextField from '@mui/material/TextField';
-import {makeStyles} from 'tss-react/mui';
 import {State, states} from "./State";
 import {Autocomplete, FilterOptionsState} from "@mui/material";
 import Box from "@mui/material/Box";
-
-const useStyles = makeStyles()({
-    option: {
-        fontSize: 15,
-        '& > span': {
-            marginRight: 10,
-            fontSize: 18,
-        },
-    },
-});
 
 interface StateSelectProps {
     onChange: (state: State | null) => void;
@@ -21,12 +10,10 @@ interface StateSelectProps {
 }
 
 export default function StateSelect({onChange, error}: StateSelectProps) {
-    const {classes} = useStyles();
 
     return (
         <Autocomplete
             options={states}
-            classes={{option: classes.option}}
             autoHighlight
             getOptionLabel={(option: State) => `${option.name} (${option.code})`}
             renderOption={(props, state: State) => (
