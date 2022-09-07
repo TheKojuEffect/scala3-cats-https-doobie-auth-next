@@ -1,5 +1,5 @@
 ThisBuild / organization := "com.nepalius"
-ThisBuild / scalaVersion := "3.1.3"
+ThisBuild / scalaVersion := "3.2.0"
 ThisBuild / version := "0.0.1-SNAPSHOT"
 
 val V = new {
