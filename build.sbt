@@ -1,5 +1,5 @@
 ThisBuild / organization := "com.nepalius"
-ThisBuild / scalaVersion := "3.1.3"
+ThisBuild / scalaVersion := "3.2.0"
 ThisBuild / version := "0.0.1-SNAPSHOT"
 
 val V = new {
@@ -8,10 +8,10 @@ val V = new {
   val Http4s = "0.23.15"
   val Circe = "0.14.2"
   val CirceConfig = "0.9.0"
-  val Logback = "1.2.11"
+  val Logback = "1.4.0"
   val Doobie = "1.0.0-RC2"
   val Postgres = "42.5.0"
-  val Flyway = "9.2.0"
+  val Flyway = "9.3.0"
   val TSec = "0.4.0"
 }
 
