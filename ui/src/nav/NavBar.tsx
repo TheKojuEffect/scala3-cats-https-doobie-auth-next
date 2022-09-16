@@ -10,12 +10,14 @@ import InputBase from '@mui/material/InputBase';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
+import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import MoreIcon from '@mui/icons-material/MoreVert';
 import {useAuth} from "../auth/Auth";
 import SignInButton from "./SignInButton";
 import SignUpButton from "./SignUpButton";
 import SignOutButton from "./SignOutButton";
+import Link from "next/link";
 
 const Search = styled('div')(({theme}) => ({
     position: 'relative',
@@ -160,6 +162,20 @@ export default function NavBar() {
                         />
                     </Search>
                     <Box sx={{flexGrow: 1}}/>
+                    {
+                        authenticated &&
+                        <Box sx={{display: {md: 'flex'}}}>
+                            <IconButton
+                                size="large"
+                                aria-label="add new"
+                                color="inherit"
+                            >
+                                <Link href="/new">
+                                    <AddIcon/>
+                                </Link>
+                            </IconButton>
+                        </Box>
+                    }
                     <Box sx={{display: {xs: 'none', md: 'flex'}}}>
                         {unauthenticated && <SignInButton/>}
                         {unauthenticated && <SignUpButton/>}
@@ -182,5 +198,6 @@ export default function NavBar() {
             {renderMobileMenu}
             {renderMenu}
         </Box>
-    );
+    )
+        ;
 }
