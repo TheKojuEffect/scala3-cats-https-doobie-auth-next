@@ -5,13 +5,14 @@ ThisBuild / version := "0.0.1-SNAPSHOT"
 val V = new {
   val CatsEffect = "3.3.14"
   val CatsEffectTime = "0.2.0"
-  val Http4s = "0.23.15"
   val Circe = "0.14.2"
   val CirceConfig = "0.9.0"
-  val Logback = "1.4.0"
   val Doobie = "1.0.0-RC2"
-  val Postgres = "42.5.0"
   val Flyway = "9.3.0"
+  val Http4s = "0.23.15"
+  val Jansi = "1.18"
+  val Logback = "1.4.1"
+  val Postgres = "42.5.0"
   val TSec = "0.4.0"
 }
 
@@ -62,6 +63,7 @@ lazy val root = (project in file("."))
   .settings(
     libraryDependencies ++= Seq(
       "com.hunorkovacs" %% "circe-config" % V.CirceConfig,
+      "org.fusesource.jansi" % "jansi" % V.Jansi,
     ),
   )
   .dependsOn(domain, api, repo)
