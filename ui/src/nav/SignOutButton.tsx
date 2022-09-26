@@ -6,7 +6,7 @@ export default function SignOutButton() {
     const {refreshAuth} = useAuth();
 
     const signOut = () => {
-        fetch('/api/logout', {method: 'POST'})
+        fetch('/logout', {method: 'POST'})
             .then(refreshAuth);
     };
 
