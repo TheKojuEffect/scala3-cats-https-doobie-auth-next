@@ -15,9 +15,13 @@ object HttpApp:
   def apply[F[_]: Async](
       first: Controller[F],
       remaining: Controller[F]*,
-  ): HttpApp[F] =
-    (first +: remaining)
-      .map(_.routes)
-      .reduceLeft(_ <+> _)
-      .orNotFound
+  ): HttpApp[F] = {
+    val allRoutes: HttpRoutes[F] =
+      (first +: remaining)
+        .map(_.routes)
+        .reduceLeft(_ <+> _)
+    Router(
+      "api" -> allRoutes,
+    ).orNotFound
       .pipe(Logger.httpApp(logHeaders = true, logBody = false))
+  }

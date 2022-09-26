@@ -27,7 +27,7 @@ export default function SignInDialog({open, onClose}: SignInDialogProps) {
 
     const {register, handleSubmit, formState: {errors}} = useForm<SignInRequest>();
     const onSubmit = (data: SignInRequest) => {
-        fetch('/api/login', {
+        fetch('/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
