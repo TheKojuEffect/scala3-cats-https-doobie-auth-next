@@ -1,9 +1,7 @@
-Local Expats
-==============
-Connect with local communities in the US
+## Sample project using Scala 3, Cats Effect, Tagless Final, Http4s, Doobie, NextJS etc
 
 
-## Getting Started
+### Getting Started
 
 Start up sbt:
 
